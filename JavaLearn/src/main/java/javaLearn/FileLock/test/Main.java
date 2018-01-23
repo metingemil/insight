@@ -18,6 +18,15 @@ public class Main
         String message1 = "message 1\n";
         String message2 = "message 2\n";
 
+        try
+        {
+            Thread.sleep(3 * 1000);
+        }
+        catch (InterruptedException e1)
+        {
+            e1.printStackTrace();
+        }
+
         Thread th1 = new Thread(new Runnable()
         {
             @Override
@@ -115,6 +124,30 @@ public class Main
         }, "Thread-4");
         th4.start();
 
+        Thread th5 = new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                log("Start thread");
+                try
+                {
+                    FileClusterDataControl.getInstance().write(filePath2, message2);
+                }
+                catch (IOException | InterruptedException e)
+                {
+                    log("error : " + e.getMessage());
+                }
+                catch (RuntimeException re)
+                {
+                    log("error : " + re.getClass().getName() + " " + re.getMessage());
+                }
+
+                log("End thread");
+            }
+        }, "Thread-5");
+        th5.start();
+
         try
         {
             th1.join();
@@ -142,6 +175,14 @@ public class Main
         try
         {
             th4.join();
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+        try
+        {
+            th5.join();
         }
         catch (InterruptedException e)
         {
