@@ -17,16 +17,14 @@ public class Main
         String filePath2 = "C:\\Users\\metgemil\\Desktop\\file_2.txt";
         String message1 = "message 1\n";
         String message2 = "message 2\n";
-
         try
         {
-            Thread.sleep(3 * 1000);
+            Thread.sleep(2000);
         }
         catch (InterruptedException e1)
         {
             e1.printStackTrace();
         }
-
         Thread th1 = new Thread(new Runnable()
         {
             @Override
@@ -58,8 +56,7 @@ public class Main
                 log("Start thread");
                 try
                 {
-                    String readStr = FileClusterDataControl.getInstance().read(filePath1);
-                    log("read " + readStr + " from file");
+                    FileClusterDataControl.getInstance().delete(filePath1);
                 }
                 catch (IOException | InterruptedException e)
                 {
@@ -132,7 +129,8 @@ public class Main
                 log("Start thread");
                 try
                 {
-                    FileClusterDataControl.getInstance().write(filePath2, message2);
+                    String readStr = FileClusterDataControl.getInstance().read(filePath1);
+                    log("read " + readStr + " from file");
                 }
                 catch (IOException | InterruptedException e)
                 {
