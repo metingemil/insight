@@ -33,7 +33,7 @@ public class Main
                 log("Start thread");
                 try
                 {
-                    FileClusterDataControl.getInstance().write(filePath1, message1);
+                    FileClusterDataControl.getInstance().write(filePath1, message1, true);
                 }
                 catch (IOException | InterruptedException e)
                 {
@@ -80,7 +80,7 @@ public class Main
                 log("Start thread");
                 try
                 {
-                    FileClusterDataControl.getInstance().write(filePath1, message2);
+                    FileClusterDataControl.getInstance().write(filePath1, message2, true);
                 }
                 catch (IOException | InterruptedException e)
                 {

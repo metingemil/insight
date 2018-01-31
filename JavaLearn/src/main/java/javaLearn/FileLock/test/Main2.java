@@ -26,7 +26,7 @@ public class Main2
                 log("Start thread");
                 try
                 {
-                    FileClusterDataControl.getInstance().delete(filePath1);
+                    FileClusterDataControl.getInstance().write(filePath1, message1, false);
                 }
                 catch (IOException | InterruptedException e)
                 {

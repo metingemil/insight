@@ -15,7 +15,6 @@ import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
-import java.nio.file.Files;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,29 +31,35 @@ public class FileClusterDataControl
     private static FileClusterDataControl instance;
 
     /**
-     * Write operation code.
+     * Supported operation types.
      */
-    private final String                  OP_WRITE       = "WRITE";                                           //$NON-NLS-1$
+    enum OperationType
+    {
+        /**
+         * Delete file operation type.
+         */
+        DELETE,
 
-    /**
-     * Read operation code.
-     */
-    private final String                  OP_READ        = "READ";                                            //$NON-NLS-1$
+        /**
+         * Read from file operation type.
+         */
+        READ,
 
-    /**
-     * Delete operation code.
-     */
-    private final String                  OP_DELETE      = "DELETE";                                          //$NON-NLS-1$
+        /**
+         * Write to file operation type.
+         */
+        WRITE
+    } //$NON-NLS-1$
 
     /**
      * Extension of the lock files.
      */
-    private final String                  LOCK_EXTENSION = ".lock";                                           //$NON-NLS-1$
+    private final String LOCK_EXTENSION = ".lock";                                           //$NON-NLS-1$
 
     /**
      * Synchronized set to hold the files that are read/write upon.
      */
-    private Set<String>                   lockedFiles    = Collections.synchronizedSet(new HashSet<String>());
+    private Set<String>  lockedFiles    = Collections.synchronizedSet(new HashSet<String>());
 
     /***************************************************************************
      * Creates a new FileClusterDataControl.
@@ -100,13 +105,16 @@ public class FileClusterDataControl
      * 
      * @param path : the file path to write to
      * @param value : the value to write in the file
+     * @param append : if <code>true</code> the value will be written to the end
+     *            of the file, if <code>false</code> the value will clear the
+     *            existing value in the file.
      * 
      * @throws InterruptedException
      * @throws IOException
      */
-    public void write(String path, String value) throws InterruptedException, IOException
+    public void write(String path, String value, Boolean append) throws InterruptedException, IOException
     {
-        runOperation(OP_WRITE, path, value);
+        runOperation(OperationType.WRITE, path, value, append);
     }
 
     /***************************************************************************
@@ -122,7 +130,7 @@ public class FileClusterDataControl
      */
     public String read(String path) throws InterruptedException, IOException
     {
-        return runOperation(OP_READ, path, null);
+        return runOperation(OperationType.READ, path, null, null);
     }
 
     /***************************************************************************
@@ -136,7 +144,7 @@ public class FileClusterDataControl
      */
     public void delete(String path) throws InterruptedException, IOException
     {
-        runOperation(OP_DELETE, path, null);
+        runOperation(OperationType.DELETE, path, null, null);
     }
 
     /***************************************************************************
@@ -146,14 +154,15 @@ public class FileClusterDataControl
      * @param operationCode
      * @param path
      * @param value
+     * @param append
      * 
      * @return value in the file
      * 
      * @throws InterruptedException
      * @throws IOException
      */
-    private String runOperation(String operationCode, String path, String value) throws InterruptedException,
-                                                                                IOException
+    private String runOperation(OperationType operationType, String path, String value, Boolean append) throws InterruptedException,
+                                                                                                       IOException
     {
         String absolutePath = (new File(path)).getPath();
 
@@ -177,29 +186,50 @@ public class FileClusterDataControl
         Main.log("Left the synchronized block for add");
 
         String returnVal = null;
+        File lockingFile = null;
+        FileLock fileLock = null;
 
         try
         {
             Main.log("Starting operation....");
-            switch (operationCode)
+            /* Lock the file for other processes trying to access it */
+            lockingFile = new File(path + LOCK_EXTENSION);
+            fileLock = getFileLock(lockingFile);
+            if (fileLock != null && fileLock.isValid())
             {
-                case OP_READ:
-                    returnVal = readSynced(absolutePath);
-                    break;
-                case OP_WRITE:
-                    writeSynced(absolutePath, value);
-                    break;
-                case OP_DELETE:
-                    deleteSynced(absolutePath);
-                    break;
-                default:
-                    Main.log("Operation '" + operationCode + "' not supported."); //$NON-NLS-1$ //$NON-NLS-2$
-                    break;
+                switch (operationType)
+                {
+                    case DELETE:
+                        File file = new File(path);
+                        if (file.exists() && !file.delete())
+                        {
+                            throw new IOException("Cannot delete the file."); //$NON-NLS-1$
+                        }
+                        break;
+                    case READ:
+                        returnVal = readFromFile(absolutePath);
+                        break;
+                    case WRITE:
+                        writeInFile(absolutePath, value, append);
+                        break;
+                }
+            }
+            else
+            {
+                throw new IOException("Cannot aquire FileLock for the desired file."); //$NON-NLS-1$
             }
             Main.log("Finishing operation....");
         }
         finally
         {
+            try
+            {
+                releaseFileLock(lockingFile, fileLock);
+            }
+            catch (IOException ioe)
+            {
+                Main.log("Cannot release filelock.");
+            }
             Main.log("Entering the synchronized block for delete");
             synchronized (lockedFiles)
             {
@@ -217,24 +247,61 @@ public class FileClusterDataControl
     }
 
     /***************************************************************************
-     * Write the value in a file by making sure no other process writes/reads
-     * in/from the same file.
+     * Get the FileLock thus blocking other processes from accessing the file.
+     * 
+     * @param lockingFile
+     * 
+     * @return file lock
+     * 
+     * @throws IOException
+     */
+    private FileLock getFileLock(File lockingFile) throws IOException
+    {
+        if (!lockingFile.exists())
+        {
+            lockingFile.createNewFile();
+        }
+
+        @SuppressWarnings("resource")
+        /* the resource is released when the FileLock is closed */
+        RandomAccessFile accessFile = new RandomAccessFile(lockingFile, "rw"); //$NON-NLS-1$;
+        FileChannel fileChannel = accessFile.getChannel();
+        return fileChannel.lock();
+    }
+
+    /***************************************************************************
+     * Releases the FileLock thus allowing other processes to access the file.
+     * 
+     * @param lockingFile
+     * @param fileLock
+     * 
+     * @throws IOException
+     */
+    private void releaseFileLock(File lockingFile, FileLock fileLock) throws IOException
+    {
+        if (fileLock != null)
+        {
+            fileLock.close();
+            fileLock = null;
+        }
+
+        lockingFile.delete();
+    }
+
+    /***************************************************************************
+     * Write the value in a file.
      * 
      * @param path : the file path to write to
      * @param value : the value to write in the file
+     * @param append : if <code>true</code> the value will be written to the end
+     *            of the file, if <code>false</code> the value will clear the
+     *            existing value in the file.
      * 
      * @throws IOException
      * 
      */
-    private void writeSynced(String path, String value) throws IOException
+    private void writeInFile(String path, String value, Boolean append) throws IOException
     {
-        final String METHOD = "writeSynced"; //$NON-NLS-1$
-
-        RandomAccessFile accessFile = null;
-        FileChannel fileChannel = null;
-        FileLock fileLock = null;
-        File lockingFile = new File(path + LOCK_EXTENSION);
-
         FileOutputStream outFileStream = null;
         OutputStreamWriter osw = null;
         BufferedWriter bw = null;
@@ -242,33 +309,17 @@ public class FileClusterDataControl
 
         try
         {
-            if (!lockingFile.exists())
+            File file = new File(path);
+            if (!file.exists())
             {
-                lockingFile.createNewFile();
+                file.createNewFile();
             }
-            accessFile = new RandomAccessFile(lockingFile, "rw"); //$NON-NLS-1$
-            fileChannel = accessFile.getChannel();
-            fileLock = fileChannel.lock();
-
-            if (fileLock != null && fileLock.isValid())
-            {
-                File file = new File(path);
-                if (!file.exists())
-                {
-                    file.createNewFile();
-                }
-                outFileStream = new FileOutputStream(file, true);
-                osw = new OutputStreamWriter(outFileStream);
-                bw = new BufferedWriter(osw);
-                out = new PrintWriter(bw);
-
-                out.write(value);
-                out.flush();
-            }
-            else
-            {
-                throw new IOException("Cannot aquire FileLock for the desired file."); //$NON-NLS-1$
-            }
+            outFileStream = new FileOutputStream(file, append);
+            osw = new OutputStreamWriter(outFileStream);
+            bw = new BufferedWriter(osw);
+            out = new PrintWriter(bw);
+            out.write(value);
+            out.flush();
         }
         finally
         {
@@ -295,30 +346,11 @@ public class FileClusterDataControl
                 osw.close();
                 osw = null;
             }
-
-            if (fileLock != null)
-            {
-                fileLock.close();
-            }
-
-            if (fileChannel != null)
-            {
-                fileChannel.close();
-            }
-
-            if (accessFile != null)
-            {
-                accessFile.close();
-                accessFile = null;
-            }
-
-            lockingFile.delete();
         }
     }
 
     /***************************************************************************
-     * Read the value in a file by making sure no other process writes/reads
-     * in/from the same file.
+     * Read the value from a file.
      * 
      * @param path : the file path to read from
      * 
@@ -326,15 +358,8 @@ public class FileClusterDataControl
      * 
      * @throws IOException
      */
-    private String readSynced(String path) throws IOException
+    private String readFromFile(String path) throws IOException
     {
-        final String METHOD = "readSynced"; //$NON-NLS-1$
-
-        RandomAccessFile accessFile = null;
-        FileChannel fileChannel = null;
-        FileLock fileLock = null;
-        File lockingFile = new File(path + LOCK_EXTENSION);
-
         String returnVal = null;
         FileInputStream inFileStream = null;
         InputStreamReader isr = null;
@@ -342,41 +367,26 @@ public class FileClusterDataControl
 
         try
         {
-            if (!lockingFile.exists())
+            File file = new File(path);
+            if (!file.exists())
             {
-                lockingFile.createNewFile();
+                return null;
             }
-            accessFile = new RandomAccessFile(lockingFile, "rw");
-            fileChannel = accessFile.getChannel();
-            fileLock = fileChannel.lock();
 
-            if (fileLock != null && fileLock.isValid())
+            inFileStream = new FileInputStream(file);
+            isr = new InputStreamReader(inFileStream);
+            br = new BufferedReader(isr);
+
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null)
             {
-                File file = new File(path);
-                if (!file.exists())
-                {
-                    return null;
-                }
-
-                inFileStream = new FileInputStream(file);
-                isr = new InputStreamReader(inFileStream);
-                br = new BufferedReader(isr);
-
-                StringBuilder sb = new StringBuilder();
-                String line = br.readLine();
-
-                while (line != null)
-                {
-                    sb.append(line);
-                    sb.append("\n");
-                    line = br.readLine();
-                }
-                returnVal = sb.toString();
+                sb.append(line);
+                sb.append("\n");
+                line = br.readLine();
             }
-            else
-            {
-                throw new IOException("Cannot aquire FileLock for the desired file.");
-            }
+            returnVal = sb.toString();
         }
         finally
         {
@@ -397,93 +407,8 @@ public class FileClusterDataControl
                 br.close();
                 br = null;
             }
-
-            if (fileLock != null)
-            {
-                fileLock.close();
-            }
-
-            if (fileChannel != null)
-            {
-                fileChannel.close();
-            }
-
-            if (accessFile != null)
-            {
-                accessFile.close();
-                accessFile = null;
-            }
-
-            lockingFile.delete();
         }
 
         return returnVal;
-    }
-
-    /***************************************************************************
-     * Delete the file by making sure no other process writes/reads in/from the
-     * same file.
-     * 
-     * @param path : the file path to be deleted
-     *
-     * @throws IOException
-     */
-    private void deleteSynced(String path) throws IOException
-    {
-        final String METHOD = "deleteSynced"; //$NON-NLS-1$
-
-        RandomAccessFile accessFile = null;
-        FileChannel fileChannel = null;
-        FileLock fileLock = null;
-        File lockingFile = new File(path + LOCK_EXTENSION);
-
-        try
-        {
-            if (!lockingFile.exists())
-            {
-                lockingFile.createNewFile();
-            }
-            accessFile = new RandomAccessFile(lockingFile, "rw"); //$NON-NLS-1$
-            fileChannel = accessFile.getChannel();
-            fileLock = fileChannel.lock();
-
-            if (fileLock != null && fileLock.isValid())
-            {
-                File file = new File(path);
-                if (!file.exists())
-                {
-                    return;
-                }
-
-                if (!file.delete())
-                {
-                    throw new IOException("Cannot delete the file."); //$NON-NLS-1$
-                }
-            }
-            else
-            {
-                throw new IOException("Cannot aquire FileLock for the desired file."); //$NON-NLS-1$
-            }
-        }
-        finally
-        {
-            if (fileLock != null)
-            {
-                fileLock.close();
-            }
-
-            if (fileChannel != null)
-            {
-                fileChannel.close();
-            }
-
-            if (accessFile != null)
-            {
-                accessFile.close();
-                accessFile = null;
-            }
-
-            lockingFile.delete();
-        }
     }
 }
