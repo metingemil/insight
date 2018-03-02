@@ -47,19 +47,19 @@ public class Test
 
         for (Mammal mammal : onlyMammals)
         {
-            System.out.println("onlyMammals list : " + mammal.me());
+            System.out.println("onlyMammals list entry : " + mammal.me());
         }
 
         for (Mammal mammal : exMammals)
         {
-            System.out.println("onlyMammals list : " + mammal.me());
+            System.out.println("exMammals list entry : " + mammal.me());
         }
 
         for (Object obj : suMammals)
         {
-            System.out.println("onlyMammals list : " + obj);
+            System.out.println("suMammals list entry : " + ((Mammal)obj).me());
         }
-        
+
         System.out.println("end program");
     }
 }
