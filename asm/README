@@ -1,0 +1,4 @@
+1. hello.asm - simple hello world program
+	-> to assemble the program: nasm -f elf hello.asm
+	-> to link the object file and create an executable file named hello: ld -m elf_i386 -s -o hello hello.o
+	-> execute the program: ./hello
