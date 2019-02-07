@@ -2,17 +2,16 @@ package interviewQuestions.ex4;
 
 import java.io.IOException;
 
-/*public*/ class A {
-	public void start() throws IOException, RuntimeException {
-		throw new RuntimeException("Not able to Start A");
+abstract class A {
+	public void test() {
+	    System.out.println();
 	}
 }
 
-class B extends A {
-	public void start() throws RuntimeException {
-		throw new RuntimeException("Not able to Start B");
-	}
-}
+//enum B extends A {
+//	VAL1,
+//    VAL2;
+//}
 
 public class Test {
 	public static void main(String args[]) {
@@ -22,8 +21,8 @@ public class Test {
 
 	private int tryStart() {
 		try {
-			A a = new A();
-			a.start();
+		//	A a = new A();
+	//		a.start();
 		} catch (RuntimeException re) {
 			System.out.println(re.toString());
 			return 1;

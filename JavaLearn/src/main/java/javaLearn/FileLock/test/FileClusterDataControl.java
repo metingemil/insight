@@ -36,6 +36,11 @@ public class FileClusterDataControl
     enum OperationType
     {
         /**
+         * Change file contents operation type.
+         */
+        CHANGE,
+
+        /**
          * Delete file operation type.
          */
         DELETE,
@@ -101,7 +106,7 @@ public class FileClusterDataControl
 
     /***************************************************************************
      * Write the value in a file by making sure no other threads write/read
-     * in/from the same file or other process.
+     * in/from the same file.
      * 
      * @param path : the file path to write to
      * @param value : the value to write in the file
@@ -114,12 +119,12 @@ public class FileClusterDataControl
      */
     public void write(String path, String value, Boolean append) throws InterruptedException, IOException
     {
-        runOperation(OperationType.WRITE, path, value, append);
+        runOperation(OperationType.WRITE, path, value, append, null);
     }
 
     /***************************************************************************
      * Read the value in a file by making sure no other threads write/read
-     * in/from the same file or other process.
+     * in/from the same file.
      * 
      * @param path : the file path to read from
      * 
@@ -130,7 +135,22 @@ public class FileClusterDataControl
      */
     public String read(String path) throws InterruptedException, IOException
     {
-        return runOperation(OperationType.READ, path, null, null);
+        return runOperation(OperationType.READ, path, null, null, null);
+    }
+
+    /***************************************************************************
+     * Changes the contents of a file by making sure no other threads/processes
+     * write/read in/from the same file.
+     * 
+     * @param path : the file path
+     * @param changeOp : the change operation applied to the file
+     * 
+     * @throws InterruptedException
+     * @throws IOException
+     */
+    public void change(String path, Changeble<String, String> changeOp) throws InterruptedException, IOException
+    {
+        runOperation(OperationType.CHANGE, path, null, null, changeOp);
     }
 
     /***************************************************************************
@@ -144,7 +164,7 @@ public class FileClusterDataControl
      */
     public void delete(String path) throws InterruptedException, IOException
     {
-        runOperation(OperationType.DELETE, path, null, null);
+        runOperation(OperationType.DELETE, path, null, null, null);
     }
 
     /***************************************************************************
@@ -161,8 +181,11 @@ public class FileClusterDataControl
      * @throws InterruptedException
      * @throws IOException
      */
-    private String runOperation(OperationType operationType, String path, String value, Boolean append) throws InterruptedException,
-                                                                                                       IOException
+    private String runOperation(OperationType operationType,
+                                String path,
+                                String value,
+                                Boolean append,
+                                Changeble<String, String> changeOp) throws InterruptedException, IOException
     {
         String absolutePath = (new File(path)).getPath();
 
@@ -174,6 +197,10 @@ public class FileClusterDataControl
             while (lockedFiles.contains(absolutePath))
             {
                 Main.log("start waiting...");
+                /*
+                 * Wait on other threads that want to operate on a file that
+                 * other threads are operating on
+                 */
                 lockedFiles.wait();
                 Main.log("end waiting...");
             }
@@ -187,18 +214,32 @@ public class FileClusterDataControl
 
         String returnVal = null;
         File lockingFile = null;
+        RandomAccessFile accessFile = null;
+        FileChannel fileChannel = null;
         FileLock fileLock = null;
 
         try
         {
             Main.log("Starting operation....");
+
             /* Lock the file for other processes trying to access it */
             lockingFile = new File(path + LOCK_EXTENSION);
-            fileLock = getFileLock(lockingFile);
+            if (!lockingFile.exists())
+            {
+                lockingFile.createNewFile();
+            }
+            accessFile = new RandomAccessFile(lockingFile, "rw"); //$NON-NLS-1$;
+            fileChannel = accessFile.getChannel();
+            fileLock = fileChannel.lock();
+
             if (fileLock != null && fileLock.isValid())
             {
                 switch (operationType)
                 {
+                    case CHANGE:
+                        writeInFile(absolutePath, changeOp.changeTo(readFromFile(absolutePath)), false);
+                        break;
+
                     case DELETE:
                         File file = new File(path);
                         if (file.exists() && !file.delete())
@@ -206,9 +247,11 @@ public class FileClusterDataControl
                             throw new IOException("Cannot delete the file."); //$NON-NLS-1$
                         }
                         break;
+
                     case READ:
                         returnVal = readFromFile(absolutePath);
                         break;
+
                     case WRITE:
                         writeInFile(absolutePath, value, append);
                         break;
@@ -222,14 +265,27 @@ public class FileClusterDataControl
         }
         finally
         {
-            try
+            if (fileLock != null)
             {
-                releaseFileLock(lockingFile, fileLock);
+                fileLock.close();
+                fileLock = null;
             }
-            catch (IOException ioe)
+            if (fileChannel != null)
             {
-                Main.log("Cannot release filelock.");
+                fileChannel.close();
             }
+
+            if (accessFile != null)
+            {
+                accessFile.close();
+                accessFile = null;
+            }
+
+            if (!lockingFile.delete())
+            {
+                Main.log("Cannot delete the lock file."); //$NON-NLS-1$
+            }
+
             Main.log("Entering the synchronized block for delete");
             synchronized (lockedFiles)
             {
@@ -244,48 +300,6 @@ public class FileClusterDataControl
             Main.log("Left the synchronized block for delete");
         }
         return returnVal;
-    }
-
-    /***************************************************************************
-     * Get the FileLock thus blocking other processes from accessing the file.
-     * 
-     * @param lockingFile
-     * 
-     * @return file lock
-     * 
-     * @throws IOException
-     */
-    private FileLock getFileLock(File lockingFile) throws IOException
-    {
-        if (!lockingFile.exists())
-        {
-            lockingFile.createNewFile();
-        }
-
-        @SuppressWarnings("resource")
-        /* the resource is released when the FileLock is closed */
-        RandomAccessFile accessFile = new RandomAccessFile(lockingFile, "rw"); //$NON-NLS-1$;
-        FileChannel fileChannel = accessFile.getChannel();
-        return fileChannel.lock();
-    }
-
-    /***************************************************************************
-     * Releases the FileLock thus allowing other processes to access the file.
-     * 
-     * @param lockingFile
-     * @param fileLock
-     * 
-     * @throws IOException
-     */
-    private void releaseFileLock(File lockingFile, FileLock fileLock) throws IOException
-    {
-        if (fileLock != null)
-        {
-            fileLock.close();
-            fileLock = null;
-        }
-
-        lockingFile.delete();
     }
 
     /***************************************************************************
@@ -386,7 +400,7 @@ public class FileClusterDataControl
                 sb.append("\n");
                 line = br.readLine();
             }
-            returnVal = sb.toString();
+            returnVal = sb.toString().trim();
         }
         finally
         {

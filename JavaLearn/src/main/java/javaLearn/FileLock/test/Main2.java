@@ -6,6 +6,7 @@ package javaLearn.FileLock.test;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class Main2
@@ -26,7 +27,24 @@ public class Main2
                 log("Start thread");
                 try
                 {
-                    FileClusterDataControl.getInstance().write(filePath1, message1, false);
+                    FileClusterDataControl.getInstance().change(filePath1, new Changeble<String, String>()
+                    {
+                        /**
+                         * Methods for transforming the set to string and vice
+                         * versa
+                         */
+                        private final FileSetClusterUtils mSetsUtils = (new Main2()).new FileSetClusterUtils();
+
+                        @Override
+                        public String changeTo(String in)
+                        {
+                            String out = null;
+                            Set<String> set = mSetsUtils.getSetFromString(in);
+                            set.remove("val2");
+                            out = mSetsUtils.getStringFromSet(set);
+                            return out;
+                        }
+                    });
                 }
                 catch (IOException | InterruptedException e)
                 {
@@ -88,5 +106,58 @@ public class Main2
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    /***************************************************************************
+     * Class holding the methods for transforming the set to string and vice
+     * versa.
+     */
+    class FileSetClusterUtils
+    {
+        /***************************************************************************
+         * Returns the set instance from the string representation of the set.
+         * 
+         * @param stringSet
+         * 
+         * @return set instance
+         */
+        public Set<String> getSetFromString(String stringSet)
+        {
+            Set<String> result = new LinkedHashSet<String>();
+            
+            if (stringSet.isEmpty()) return result;
+
+            for (String setEntry : stringSet.split(",")) //$NON-NLS-1$
+            {
+                result.add(setEntry);
+            }
+            return result;
+        }
+
+        /***************************************************************************
+         * Returns the string representation of the set.
+         * 
+         * @param set
+         * 
+         * @return the string representation of the set
+         */
+        public String getStringFromSet(Set<String> set)
+        {
+            if (set == null) return null;
+
+            int index = 0;
+            StringBuilder retVal = new StringBuilder();
+            for (String setEntry : set)
+            {
+                index++;
+                retVal.append(setEntry);
+                if (index < set.size())
+                {
+                    retVal.append(","); //$NON-NLS-1$
+                }
+            }
+
+            return retVal.toString();
+        }
     }
 }
