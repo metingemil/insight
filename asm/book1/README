@@ -1,0 +1,74 @@
+1. ------------------------------------------------
+
+I had problems on chapter 5 - the Kdbg did not highlight the current line
+	assembled the code with following commands and it worked - I think the thing was the dwarf debug standard
+
+	nasm -f elf32 -g -F dwarf eatsyscall.asm -o eatsyscall.o
+	ld -g -m elf_i386 -o eatsyscall eatsyscall.o
+
+
+2. ------------------------------------------------
+
+    also on chapter 5 - Insight debugger not  installed by default on ubuntu 18.10
+        follow steps described in link : http://www.dalfonso.co/2016/04/23/setting-insight-debugger-on-ubuntu-16-04-lts/
+        
+    1. General
+    sudo apt-get install autoconf
+    sudo apt-get install autogen
+    
+    2. Dependencies for Bfd
+    sudo apt-get install texinfo
+    sudo apt-get install zlib1g-dev
+    
+    3. Dependencies for libgui
+    sudo apt-get install tcl-dev
+    sudo apt-get install tk-dev
+    sudo apt-get install mesa-common-dev
+    sudo apt-get install libjpeg-dev
+    sudo apt-get install libtogl-dev
+    
+    4. Dependencies for GDB
+    sudo apt-get install python-dev
+    sudo apt-get install flex
+    sudo apt-get install bison
+    sudo apt-get install itcl3
+    sudo apt-get install itk3
+    sudo apt-get install iwidgets4
+    
+    5. Get the latest version
+    git clone --recursive git://sourceware.org/git/insight.git
+    
+    6. Run autoconf
+    In the home of the cloned repository run the autoconf command:
+    netshark@NAUBVM01:~/insight$ autoconf
+    
+    7. Create a configuration script (here insight.sh)  in the home of the cloned repository containing the following command: ./configure --prefix=/usr/. \
+    --libdir=/usr/lib64 \
+    --disable-binutils \
+    --disable-elfcpp \
+    --disable-gas \
+    --disable-gold \
+    --disable-gprof \
+    --disable-ld \
+    --disable-rpath \
+    --disable-zlib \
+    --enable-sim \
+    --with-gdb-datadir=/usr/share/insight \
+    --with-jit-reader-dir=/usr/lib64/insight \
+    --with-separate-debug-dir='/usr/lib/debug' \
+    --with-expat \
+    --with-python \
+    --without-libunwind
+    
+    8. Change the file attributes
+    netshark@NAUBVM01:~/insight$ chmod +x insight.sh
+    
+    9. Run the script (here named insight.sh)
+    netshark@NAUBVM01:~/insight$ ./insight.sh
+    
+    10. Run make
+    netshark@NAUBVM01:~/insight$ make
+    
+    11. Install insight
+    netshark@NAUBVM01:~/insight$ sudo make install
+
