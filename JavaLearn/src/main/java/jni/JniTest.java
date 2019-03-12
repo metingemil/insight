@@ -13,29 +13,33 @@ public class JniTest
 
     public static void main(String[] args)
     {
-        System.out.println("Welcome to calculator");
-        System.out.println("provide first operand: ");
-        int firstOp = 0, secondOp = 0;
-        String operator = null;
-        try
-        {
-            String strFirstOp = sReader.readLine();
-            firstOp = Integer.valueOf(strFirstOp);
+       do{
+            System.out.println("Welcome to calculator");
+            System.out.println("provide first operand: ");
+            int firstOp = 0, secondOp = 0;
+            String operator = null;
+            try
+            {
+                String strFirstOp = sReader.readLine();
+                firstOp = Integer.valueOf(strFirstOp);
 
-            System.out.println("provide second operand: ");
+                System.out.println("provide second operand: ");
 
-            String strSecondOp = sReader.readLine();
-            secondOp = Integer.valueOf(strSecondOp);
+                String strSecondOp = sReader.readLine();
+                secondOp = Integer.valueOf(strSecondOp);
 
-            System.out.println("provide operator: ");
-            operator = sReader.readLine();
+                System.out.println("provide operator: ");
+                operator = sReader.readLine();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                break;
+            }
+
+            Calculator calc = new Calculator(firstOp, secondOp, operator);
+            System.out.println("Result is : " + calc.getResult());
         }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
-        Calculator calc = new Calculator(firstOp, secondOp, operator);
-        System.out.println(calc.getResult());
+        while(true);
     }
 }

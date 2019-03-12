@@ -1,0 +1,9 @@
+Generate jni header file
+javac -h jni/c jni/Calculator.java
+
+
+gcc -fPIC -I"/usr/lib/jvm/java-11-openjdk-amd64/include" -I"/usr/lib/jvm/java-11-openjdk-amd64/include/linux" -shared -o libcalc.so Calculator.c
+
+
+
+zeusch@zeusch-VirtualBox:~/learn/git_repositories/github/learn/JavaLearn$ java -cp target/JavaLearn-0.0.1-SNAPSHOT.jar -Djava.library.path=src/main/java/jni/c jni.JniTest

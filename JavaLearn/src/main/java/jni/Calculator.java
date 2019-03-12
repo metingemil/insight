@@ -7,7 +7,7 @@ public class Calculator
 {
     static
     {
-        System.loadLibrary("libcalc.so");
+        System.loadLibrary("calc");
     }
 
     private Integer mFirstOperand;
