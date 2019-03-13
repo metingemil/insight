@@ -5,11 +5,8 @@ package jni;
 
 public class Calculator
 {
-    static
-    {
-        System.loadLibrary("calc");
-    }
-
+    private boolean mLibLoaded = false;
+    
     private Integer mFirstOperand;
 
     private Integer mSecondOperand;
@@ -27,6 +24,11 @@ public class Calculator
 
     public Integer getResult()
     {
+        if(!mLibLoaded)
+        {
+            System.loadLibrary("calc");
+        }
+        
         return calculate(mFirstOperand, mSecondOperand, mOperator);
     }
 }

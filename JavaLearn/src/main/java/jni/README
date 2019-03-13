@@ -2,8 +2,31 @@ Generate jni header file
 javac -h jni/c jni/Calculator.java
 
 
-gcc -fPIC -I"/usr/lib/jvm/java-11-openjdk-amd64/include" -I"/usr/lib/jvm/java-11-openjdk-amd64/include/linux" -shared -o libcalc.so Calculator.c
+gcc -fPIC -I"/usr/lib/jvm/java-11-openjdk-amd64/include" -I"/usr/lib/jvm/java-11-openjdk-amd64/include/linux" -shared -o libcalc.so -g Calculator.c
 
 
 
 zeusch@zeusch-VirtualBox:~/learn/git_repositories/github/learn/JavaLearn$ java -cp target/JavaLearn-0.0.1-SNAPSHOT.jar -Djava.library.path=src/main/java/jni/c jni.JniTest
+
+
+Attach gdb to java process:
+sudo gdb -p [java process pid]
+
+
+
+
+
+Remote gdb:
+
+on remote (where java process runs):
+    sudo gdbserver 169.254.71.249:6667 --attach [java pid]
+    
+    
+on host
+    gdb
+    set sysroot /home/admin/Desktop/libcalc/ -> Specifies the local directory that contains copies of target libraries in the corresponding         subdirectories. This option is useful when debugging with gdbserver.
+    set solib-search-path Desktop/libcalc/ -> Specifies directories where GDB will search for shared libraries with symbols
+    dir Desktop/libcalc/ > set the source directory of the source files
+    target remote 169.254.232.172:6667
+
+
