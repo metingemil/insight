@@ -27,6 +27,7 @@ public class Calculator
         if(!mLibLoaded)
         {
             System.loadLibrary("calc");
+            mLibLoaded = true;
         }
         
         return calculate(mFirstOperand, mSecondOperand, mOperator);
