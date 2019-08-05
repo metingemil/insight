@@ -7,10 +7,10 @@ public class Main {
 		PersonList pers = main.getPersons();
 
 		boolean contains;
-		
+
 		ICustomObject obj = main.getPerson();
 		contains = pers.contains(obj);
-		
+
 		System.out.println(String.format("Person exists : %s", Boolean.toString(contains)));
 	}
 
@@ -23,7 +23,7 @@ public class Main {
 		return persons;
 	}
 
-	public ICustomObject getPerson() {
+	public Person getPerson() {
 		return new Person(3, "Nume_3", "Prenume_3");
 	}
 }
