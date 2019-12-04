@@ -2,12 +2,12 @@ package javaLearn.Generics.param;
 
 public class Main {
 	public static void main(String[] args) {
-		Garage<Car> garage = getCarGarage();
+		Garage<?> garage = getCarGarage();
 		garage.park(getCar());
 		garage.hold(new Bicycle());
 	}
 
-	public static Car getCar() {
+	public static Vehicle getCar() {
 		return new Car();
 	}
 
@@ -15,7 +15,7 @@ public class Main {
 		return new Plane();
 	}
 	
-	public static Garage<Car> getCarGarage() {
+	public static Garage<?> getCarGarage() {
 		return new CarGarage();
 	}
 }
