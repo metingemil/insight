@@ -9,86 +9,87 @@ import java.util.Arrays;
  * In ce ordine trebuiesc vandute sticlele astfel ca la sfarsit sa avem profitul
  * maxim posibil.
  */
-public class WineBottles
-{
+public class WineBottles {
 
-    WineBottles(int[] bottlePrices)
-    {
-        mBottlePrices = bottlePrices;
-    }
+	WineBottles(int[] bottlePrices) {
+		mBottlePrices = bottlePrices;
+	}
 
-    private int[] mBottlePrices;
+	private int[] mBottlePrices;
 
-    int[]         mOrder;
+	int[] mOrder;
 
-    double[][]    mComputedVals;
+	double[][] mComputedVals;
 
-    public static void main(String[] args)
-    {
-        // int[] x = new int[] {70,70,250,1,74};
-        // int[] x = new int[] {100,100,100,1000,1000,1};
-        int[] x = new int[] { 1, 2, 3, 4, 5 };
-        (new WineBottles(x)).computeBestPrice();
-    }
+	double[] maxForIteration;
 
-    public void computeBestPrice()
-    {
-        int n = mBottlePrices.length;
-        mOrder = new int[n];
-        mComputedVals = new double[n][n];
+	public static void main(String[] args) {
+		// int[] x = new int[] {70,70,250,1,74};
+		// int[] x = new int[] { 100, 100, 100, 1000, 1000, 1 };
+		int[] x = new int[] { 1, 2, 3, 4, 5 };
+		(new WineBottles(x)).computeBestPrice();
+	}
 
-        double optimumSum = bestMatch(1, n);
+	public void computeBestPrice() {
+		int n = mBottlePrices.length;
+		mOrder = new int[n];
+		maxForIteration = new double[n];
+		mComputedVals = new double[n][n];
 
-        System.out.println("Optimum profit is " + optimumSum + " for order " + Arrays.toString(mOrder));
-    }
+		double optimumSum = bestMatch(1, n);
 
-    private double bestMatch(int i, int j)
-    {
-        if (mComputedVals[i - 1][j - 1] != 0)
-        {
-            return mComputedVals[i - 1][j - 1];
-        }
+		System.out.println("Optimum profit is " + optimumSum + " for order " + Arrays.toString(mOrder));
+	}
 
-        int n = mBottlePrices.length;
+	private double bestMatch(int i, int j) {
+		if (mComputedVals[i - 1][j - 1] != 0) {
+			return mComputedVals[i - 1][j - 1];
+		}
 
-        int iteration = i - 1 + n - j;
+		int n = mBottlePrices.length;
 
-        double max = 0;
+		int iteration = i - 1 + n - j;
 
-        if (i == j)
-        {
-            mOrder[iteration] = i - 1;
-            max = power(1.1, iteration) * mBottlePrices[i - 1];
-        }
-        else
-        {
-            double leftPick = power(1.1, iteration) * mBottlePrices[i - 1] + bestMatch(i + 1, j);
-            double rightPick = power(1.1, iteration) * mBottlePrices[j - 1] + bestMatch(i, j - 1);
+		double max = 0;
 
-            if (leftPick <= rightPick)
-            {
-                max = rightPick;
-                mOrder[iteration] = j - 1;
-            }
-            else
-            {
-                max = leftPick;
-                mOrder[iteration] = i - 1;
-            }
-        }
+		if (i == j) {
+			max = power(1.1, iteration) * mBottlePrices[i - 1];
 
-        mComputedVals[i - 1][j - 1] = max;
-        return max;
-    }
+			if (maxForIteration[iteration] < max) {
+				maxForIteration[iteration] = max;
+				mOrder[iteration] = i - 1;
+			}
+		} else {
+			double leftPick = power(1.1, iteration) * mBottlePrices[i - 1] + bestMatch(i + 1, j);
+			double rightPick = power(1.1, iteration) * mBottlePrices[j - 1] + bestMatch(i, j - 1);
 
-    private double power(double val, int exp)
-    {
-        double result = 1;
-        for (int i = 0; i < exp; i++)
-        {
-            result *= val;
-        }
+			if (leftPick <= rightPick) {
+				max = rightPick;
 
-        return result;
-    }
+				if (maxForIteration[iteration] < max) {
+					maxForIteration[iteration] = max;
+					mOrder[iteration] = j - 1;
+				}
+			} else {
+				max = leftPick;
+
+				if (maxForIteration[iteration] < max) {
+					maxForIteration[iteration] = max;
+					mOrder[iteration] = i - 1;
+				}
+			}
+		}
+
+		mComputedVals[i - 1][j - 1] = max;
+		return max;
+	}
+
+	private double power(double val, int exp) {
+		double result = 1;
+		for (int i = 0; i < exp; i++) {
+			result *= val;
+		}
+
+		return result;
+	}
 }
