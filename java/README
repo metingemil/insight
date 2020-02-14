@@ -1,4 +1,8 @@
-cd ../JavaLearn/ directory
+#code written while reading "Java - The Complete Reference  ninth edition" by Herbert Schildt
+
+
+
+cd ../java/ directory
 
 mvn clean install
 
