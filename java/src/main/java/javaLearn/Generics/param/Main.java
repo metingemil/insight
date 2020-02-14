@@ -3,7 +3,7 @@ package javaLearn.Generics.param;
 public class Main {
 	public static void main(String[] args) {
 		Garage<?> garage = getCarGarage();
-		garage.park(getCar());
+		//garage.park(getCar());
 		garage.hold(new Bicycle());
 	}
 
