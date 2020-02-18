@@ -15,6 +15,16 @@ void func2(int *arr) {
 
 /*
 int main(void) {
+	char str1[] = "destinatie";
+	char str2[] = "sursa";
+
+	strcpy(str1, str2);
+
+	printf(str1);
+	printf("\n");
+	printf(str2);
+	printf("\n");
+
 	int a[5] = { 0, 1, 2, 3, 4 };
 	printf("sizeof array in main : %d\n", (int) sizeof(a));
 
@@ -45,3 +55,16 @@ int main(void) {
 	}
 }
 */
+
+void strcpy(char *dest, char *source) {
+	char temp;
+	while (temp = (*dest++ = *source++)) {
+		printf("temp : %c\n", temp);
+	}
+	printf("last temp : %c\n", temp);
+	if (temp) {
+		printf("\\ 0 is true \n");
+	} else {
+		printf("\\ 0 is false \n");
+	}
+}
