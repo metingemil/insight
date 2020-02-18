@@ -1,7 +1,7 @@
 /*
  * $Id$
  */
-package javaLearn.concurrency;
+package javaInsight.concurrency;
 
 import java.io.File;
 import java.text.DateFormat;

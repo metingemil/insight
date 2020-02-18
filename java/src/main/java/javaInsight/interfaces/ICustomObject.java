@@ -1,4 +1,4 @@
-package javaLearn.interfaces;
+package javaInsight.interfaces;
 
 public interface ICustomObject {
 

@@ -1,4 +1,4 @@
-package javaLearn.interfaces;
+package javaInsight.interfaces;
 
 public class Main {
 	public static void main(String[] args) {

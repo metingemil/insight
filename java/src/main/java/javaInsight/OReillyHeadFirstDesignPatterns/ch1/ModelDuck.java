@@ -1,4 +1,4 @@
-package javaLearn.OReillyHeadFirstDesignPatterns.ch1;
+package javaInsight.OReillyHeadFirstDesignPatterns.ch1;
 
 public class ModelDuck extends Duck {
 

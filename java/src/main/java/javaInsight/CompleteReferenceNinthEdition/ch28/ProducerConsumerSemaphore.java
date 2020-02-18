@@ -1,4 +1,4 @@
-package javaLearn.CompleteReferenceNinthEdition.ch28;
+package javaInsight.CompleteReferenceNinthEdition.ch28;
 
 //An implementation of a producer and consumer
 //that use semaphores to control synchronization.

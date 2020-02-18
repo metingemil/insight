@@ -1,4 +1,4 @@
-package javaLearn.CompleteReferenceNinthEdition.ch28;
+package javaInsight.CompleteReferenceNinthEdition.ch28;
 
 //A simple semaphore example.
 import java.util.concurrent.*;

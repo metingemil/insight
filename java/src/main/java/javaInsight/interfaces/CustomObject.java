@@ -1,4 +1,4 @@
-package javaLearn.interfaces;
+package javaInsight.interfaces;
 
 public class CustomObject implements ICustomObject {
 	private int mId;

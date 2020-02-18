@@ -1,4 +1,4 @@
-package javaLearn.Generics;
+package javaInsight.Generics;
 
 public class Eukaryot extends LifeForm
 {

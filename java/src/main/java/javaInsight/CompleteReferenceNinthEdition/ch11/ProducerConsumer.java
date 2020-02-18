@@ -1,4 +1,4 @@
-package javaLearn.CompleteReferenceNinthEdition.ch11;
+package javaInsight.CompleteReferenceNinthEdition.ch11;
 
 //A correct implementation of a producer and consumer.
 class Q {

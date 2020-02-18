@@ -1,4 +1,4 @@
-package javaLearn.OReillyHeadFirstDesignPatterns.ch1;
+package javaInsight.OReillyHeadFirstDesignPatterns.ch1;
 
 public class FlyWithWings implements FlyBehavior {
 	public void fly() {

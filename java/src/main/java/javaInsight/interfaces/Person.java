@@ -1,4 +1,4 @@
-package javaLearn.interfaces;
+package javaInsight.interfaces;
 
 public class Person extends CustomObject{
 	private String mNume;

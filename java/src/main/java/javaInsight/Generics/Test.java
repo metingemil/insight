@@ -1,4 +1,4 @@
-package javaLearn.Generics;
+package javaInsight.Generics;
 
 import java.util.ArrayList;
 import java.util.List;

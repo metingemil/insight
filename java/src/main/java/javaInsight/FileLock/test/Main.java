@@ -1,7 +1,7 @@
 /*
  * $Id$
  */
-package javaLearn.FileLock.test;
+package javaInsight.FileLock.test;
 
 import java.io.IOException;
 import java.text.DateFormat;

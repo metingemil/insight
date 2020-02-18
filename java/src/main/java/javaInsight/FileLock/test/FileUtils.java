@@ -1,7 +1,7 @@
 /*
  * $Id$
  */
-package javaLearn.FileLock.test;
+package javaInsight.FileLock.test;
 
 import java.io.BufferedWriter;
 import java.io.File;

@@ -1,4 +1,4 @@
-package javaLearn.Generics.param;
+package javaInsight.Generics.param;
 
 public class CarGarage implements Garage<Car> {
 

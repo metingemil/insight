@@ -1,4 +1,4 @@
-package javaLearn.interfaces;
+package javaInsight.interfaces;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package javaLearn.CompleteReferenceNinthEdition.ch28;
+package javaInsight.CompleteReferenceNinthEdition.ch28;
 
 // An example of CountDownLatch.
 import java.util.concurrent.CountDownLatch;

@@ -1,3 +1,4 @@
+package javaInsight.algs;
 import java.io.IOException;
 
 public class Main

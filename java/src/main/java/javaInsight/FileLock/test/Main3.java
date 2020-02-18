@@ -1,7 +1,7 @@
 /*
  * $Id$
  */
-package javaLearn.FileLock.test;
+package javaInsight.FileLock.test;
 
 import java.io.File;
 import java.io.IOException;

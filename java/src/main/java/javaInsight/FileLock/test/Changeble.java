@@ -1,7 +1,7 @@
 /*
  * Copyright Keysight Technologies 2018
  */
-package javaLearn.FileLock.test;
+package javaInsight.FileLock.test;
 
 /***************************************************************************
  * Provides a method that changes an input type I into an output type O.
