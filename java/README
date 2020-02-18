@@ -6,4 +6,4 @@ cd ../java/ directory
 
 mvn clean install
 
-java -cp target/JavaLearn-0.0.1-SNAPSHOT.jar javaLearn.OReillyHeadFirstDesignPatterns.ch1.MiniDuckSimulator 
+java -cp target/JavaInsight-0.0.1-SNAPSHOT.jar javaInsight.OReillyHeadFirstDesignPatterns.ch1.MiniDuckSimulator 

@@ -1,4 +1,4 @@
-package javaLearn.CompleteReferenceNinthEdition.ch28;
+package javaInsight.CompleteReferenceNinthEdition.ch28;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
