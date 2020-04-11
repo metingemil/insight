@@ -1,20 +1,21 @@
 #include <iostream>
+#include <ctime>
 
 // Print welcome messages to the terminal
-void PrintIntroduction()
+void PrintIntroduction(int Difficulty)
 {
-    std::cout << "\n\nYou are a secret agent breaking into a secure server room\n";
-    std::cout << "You need to enter the correct codes to continue...\n\n";
+    std::cout << "\n\nYou are a secret agent breaking into a level " << Difficulty;
+    std::cout << " secure server room... \nEnter the correct codes to continue...\n\n";
   
 }
 
-bool PlayGame()
+bool PlayGame(int Difficulty)
 {
-    PrintIntroduction();
+    PrintIntroduction(Difficulty);
 
-    int CodeA = 4;
-    int CodeB = 3;
-    int CodeC = 2;
+    int CodeA = rand() % Difficulty + Difficulty;
+    int CodeB = rand() % Difficulty + Difficulty;
+    int CodeC = rand() % Difficulty + Difficulty;
 
     int CodeSum = CodeA + CodeB + CodeC;
     int CodeProduct = CodeA * CodeB * CodeC;
@@ -35,25 +36,37 @@ bool PlayGame()
     // Check if the player guess is correct
     if(GuessSum == CodeSum && GuessProduct == CodeProduct)
     {
-        std::cout << "\nYou win!" << std::endl;
+        std::cout << "\n*** Well done aagent! You have extracted a file! Keep going! ***";
         return true;
     } 
     else
     {
-        std::cout << "\nYou lose!" << std::endl;
+        std::cout << "\n*** You entered the wrong code! Careful agent! Try again! ***";
         return false;
     }
 }
 
 int main()
 {
-    while(true)
+    srand(time(NULL)); // create new random sequence based on time of day
+
+    int LevelDifficulty = 1;
+    int const MaxDifficulty = 5;
+
+    while(LevelDifficulty <= MaxDifficulty) // loop until all levels are completed
     {
-        bool bLevelComplete = PlayGame();
+        bool bLevelComplete = PlayGame(LevelDifficulty);
 
         std::cin.clear(); // Clears any errors
         std::cin.ignore(); // Discards the buffer
+
+        if (bLevelComplete)
+        {
+            ++LevelDifficulty;
+        }   
     }
+
+    std::cout << "\n*** Great work agent! You got all the files! Now get out of there! ***\n";
 
     return 0;
 }
