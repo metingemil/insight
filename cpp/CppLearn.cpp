@@ -75,6 +75,19 @@ void refToInt(int &no) {
 	cout << "In function refToInt last :" << no << endl;
 }
 
+
+void func1(int x)
+{
+	cout << x << endl;
+	x++;
+}
+
+void func1(int& x)
+{
+	cout << x << endl;
+	x++;
+}
+
 int main() {
 	Complex c1(1.1, 2.2), c2(3.3, 4.4);
 	Complex c3 = c1 + c2;
@@ -106,6 +119,9 @@ int main() {
 	int tempSize;
 	cin >> tempSize;
 	createArrayOfSize(tempSize);
+
+	int x = 10;
+	func1(x);
 	return 0;
 }
 
