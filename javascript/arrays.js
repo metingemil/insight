@@ -13,3 +13,16 @@ arr = arr.concat.apply(getArray())
 //console.log(Array.prototype.concat.apply(getArray()))
 //console.log(Array.prototype.concat(...getArray(), ...getInt()))
 console.log([...getArray(), getInt(), ...getArray(), getInt()])
+
+function getMapper() {
+    let total = 0
+    return val => {
+        total += val
+        console.log(total)
+    }
+}
+
+(function chicks() {
+    const arr = [1, 2, 3, 4, 5];
+    console.log(arr.map(getMapper()))
+}())

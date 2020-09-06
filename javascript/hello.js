@@ -12,6 +12,6 @@ console.dir(trice)
 
 console.log(`${typeof [1, 2, 3, 4]}`)
 
-let myDate = new Date(2020,7,8,14,58,33,333)
+let myDate = new Date(2020, 7, 8, 14, 58, 33, 333)
 console.log("Date", myDate)
 console.log(myDate.toISOString())
