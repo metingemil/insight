@@ -19,10 +19,12 @@ function getMapper() {
     return val => {
         total += val
         console.log(total)
+        return total
     }
 }
 
 (function chicks() {
     const arr = [1, 2, 3, 4, 5];
+    console.log(arr.map(getMapper()))
     console.log(arr.map(getMapper()))
 }())
