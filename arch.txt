@@ -1,0 +1,75 @@
+check if Xorg server is running:
+	-> ps -ef | grep Xorg
+
+-------------------------
+
+
+~/.xinitrc 
+		is only read if you start X11 with startx (or anything that calls xinit). If you log in in graphics mode, the display manager chooses a session to start. Each session manager or desktop environment has its own startup script(s), if any.
+
+/bin/bash
+       The bash executable
+/etc/profile
+       The systemwide initialization file, executed for login shells
+~/.bash_profile
+       The personal initialization file, executed for login shells
+~/.bashrc
+       The individual per-interactive-shell startup file
+~/.bash_logout
+       The individual login shell cleanup file, executed when a login shell exits
+~/.inputrc
+       Individual readline initialization file
+
+--------------------------
+
+echo $TERM	-> what terminal
+echo $0		-> what shell
+
+--------------------------
+
+
+sddm: -> display manager (login manager)
+	- to activate/deactivate sddm
+			$ systemctl enable[disable] sddm.service
+
+	- to run multiple desktop environments or windows managers add .desktop files for each DE or WM in /usr/share/xsessions/dwm.desktop
+			eg. 
+					[Desktop Entry]
+					Name=dwm
+					Type=XSession
+					Exec=~/dwmstart.sh
+					TryExec=
+					DesktopNames=DWM
+
+			in dwmstart.sh  add at least $ exec dwm
+
+
+st: ctrl + shift + pageUp - increase font
+
+ubuntu :
+
+	- $ sudo systemctl set-default multi-user	-> disable gui  (reboot required)
+	- $ sudo systemctl set-default graphical	-> enable gui
+	- $ sudo systemctl start gdm3				-> start gui manually (the GDM(gnome display manager) display manager)
+	- $ from cmd line 	-> $ startx
+						-> $ gnome-session-quit
+
+
+
+-----------------------------
+
+
+https://www.reddit.com/r/unixporn/comments/k9lbsd/dwm_current_state_of_my_dwm_build/
+
+https://dwm.suckless.org/patches/barpadding/
+
+https://dwm.suckless.org/patches/uselessgap/
+
+https://imgur.com/a/R4dy8js
+
+
+-----------------------------
+
+30-40
+
+

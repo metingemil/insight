@@ -1,0 +1,54 @@
+git fetch -p -> delete remote tracking branches
+
+git branch -vv  -> show all local branches that track remote branches
+
+git branch -d [branch] -> delete local branch
+
+git push origin --delete [branch] -> delete remote branch
+
+git push -u(--set-upstream) origin [branch]  -> create branch on remote 
+
+git branch  [branch]
+
+git branch [branch] (--set-upstream-to=[origin/branch]) (git checkout -b [branch])  -> create local branch  (also set upstream track) (create local branch and move to it)
+
+git branch --set-upstream-to=[origin/branch]) -> change tracking branch for the current branch
+
+git pull --rebase - pull changes from remote and reapply local changes
+
+git status -b --porcelain  -> show which remote branch is tracking
+cat .git/config
+
+git checkout --amend -> change last commit
+
+git reset [named commit] -> set the current branch HEAD to named commit
+		- (--mixed (default optional) -> cpy from repo to staing area; --soft - dont't copy anything from repo; --hard - copy from repo to working area and staging area)
+		- use case: remove commited file from last commit
+						i) git reset --soft HEAD~1  -> move HEAD to the las commit and don't touch anything in working and staging area (will leave the files modified locally as before the commit)
+						ii) git reset HEAD <file>	-> remove the file we don't want in the commit (also git rm --cached <file> is identical) - this removes it from the staging area
+						iii) git commit 
+
+git rebase -i HEAD~3 -> interactive rebase last 3 commits beafore HEAD
+git revert commit -> automatically creates a new commit with opposite changes
+
+git reflog HEAD -> show activity log
+
+git show [named commi] -> show commit details
+
+git show-ref [branch] -> show local and remotes branch current commits
+
+git blame [file] -> show in which commit every line happend
+
+lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd (%cr)) %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso
+
+git log --decorate -> show positional references
+
+git lg  HEAD..origin/master  -> show log of new commits on origin master branch and not yet merged on local branch
+
+git cherry-pick [named commit]	->  cheryy pick a single commit from another branch to be included
+
+git cat-file -p [named commit]  -> print commit file contents
+
+git update-index --skip-worktree(--no-skip-worktree) [file]   -> skip(unskip) unstaged changes once added to .git/info/exclude
+
+git remote -v  -> view remote
