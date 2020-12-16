@@ -156,9 +156,29 @@ arch linux installation :
 			 # startx loop
 			[[ $(fgconsole 2>/dev/null) == 1 ]] && exec startx --vt1
 
+		$ sudo pacman -S xf86-video-intel	-> install intel driver for backlight
+		- use $ xbacklight, $ xbacklight -inc 10, $ xbacklight -set 90 -> use xbacklight to get, increment or set backlight value
+
+
+		$ pacman -S base-devel glibc webkit2gtk gcr -> needed for building surf browser 
 
 
 
+	2 sound problems
+		$ pacman -S alsa-plugins alsa-utils
+		- create /etc/asound.conf or user-specific ~/.asoundrc  if it doesn't exist and select the default sound card
+			add in file : 	defaults.pcm.card 1
+					defaults.ctl.card 1
+		- check sound cards and umute volume with alsamixer
+
+
+
+------------------------------
+
+$ vim --version | grep clipboard -> check if vim supports clipboard copy
+$ $ sudo pacman -S gvim -> conflicts with vim -> remove vim -> gvim has clipboard support
+- in vim :echo has('clipboard')  -> check if vim supports clipboard
+- in vim :set encoding	-> in order to see special chars/ emoticons/ icons etc  set encoding to utf-8 (in .vimrc or systemwide) 
 
 ------------------------------
 
