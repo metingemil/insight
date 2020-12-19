@@ -19,7 +19,7 @@ git pull --rebase - pull changes from remote and reapply local changes
 git status -b --porcelain  -> show which remote branch is tracking
 cat .git/config
 
-git checkout --amend -> change last commit
+git commit --amend -> change last commit
 
 git reset [named commit] -> set the current branch HEAD to named commit
 		- (--mixed (default optional) -> cpy from repo to staing area; --soft - dont't copy anything from repo; --hard - copy from repo to working area and staging area)

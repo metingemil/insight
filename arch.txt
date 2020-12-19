@@ -1,3 +1,172 @@
+arch linux installation :
+
+	* i used as reference DistroTube video  https://www.youtube.com/watch?v=PQgyW10xD8s (Arch Linux Installation Guide 2020) and the arch linux installation guide https://wiki.archlinux.org/index.php/installation_guide
+
+
+	- no need to set keyboard layout - default is en_US
+
+	1. check internet connection
+		$ ping www.google.com or ping 8.8.8.8
+
+		problem 1 : no internet on WiFi
+			 $ iwctl
+			 > help
+			 > device list
+			 > station {wlan0} get-networks
+			 > station {wlan0} connect {DIGI-02325807} -> and enter passphrase
+			 > exit	
+	2. update system clock
+		$ timedatectl set-ntp true
+			- verify with: $ timedatectl status and/or $ date
+
+	3. partition drive with fdisk or cfdisk
+		$ fdisk -l  -> list available drives
+		$ fdisk /dev/sdb -> fdisk in the desired installation drive to set up partifionsi
+			> h -> for help
+
+			- create the partition table
+				- if there is no partition table, create one with 
+		 			> g  -> create GTP partition table (for UEFI)
+				- if there already is a partion table we can print the partition table with
+					> p -> print the partition table
+					> F -> list free unpartitioned space
+
+			- create the partitions
+				> n -> add a new partition
+					- use the default Partition number
+					- use the default First sectori
+					- for the last sector we can use the default to use all the available space in the partition or give the size as +550M (for a partition size of 550 MegaBytes) or +2G (for a partition of 2 GigaBytes)
+
+				* do these steps for every desired partition (UEFI, Linux swap, ext4 ...)
+
+				> t -> change a partition type
+					- select partition number (from the previous step)
+					- select the partition type (e.g. 1 for EFI System, 19 for Linux Swap, 20 for Linux filesystem)
+
+				> w -> write table to disk
+
+		* check if all is fine with $ lsblk or $ fdisk -l
+
+	4. make the filesystems
+		$ mkfs.fat -F32 {/dev/sda1} -> for the EFI file system
+		$ mkswap {/dev/sda2} -> for Linux swap
+		$ swapon {/dev/sda2}
+		$ mkfs.ext4 {/dev/sdb8} -> for ext4 filesystem
+
+	5. mount the partition
+		$ mount {/dev/sdb8} {/mnt}
+
+	6. install the base system for arch linux
+		$ pacstrap /mnt base linux linux-firmware
+
+	7. generate the filesystem table (fstab)
+		$ genfstab -U /mnt >> /mnt/etc/fstab 
+
+	8. chroot in the new system
+		$ arch-chroot /mnt
+
+	9. set the time zone
+		$ ln -sf /usr/share/zoneinfo/Europe/Bucharest /etc/localtime
+
+			* list available zoneinfos: $ ls /usr/share/zoneinfo (Europe); $ ls /usr/share/zoneinfo/Europe (Bucharest)
+
+	10. set HW clock
+		$ hwclock --systohc
+
+	11. set locale
+		- install editor
+			$ pacman -S vim
+		- edit /etc/locale.gen and uncomment en_US.UTF-8 UTF-8
+		- $ locale-gen
+		- create /etc/locale.conf and add
+			LANG=en_US.UTF-8
+
+	12. set hostname
+		- create /etc/hostname and add the hostname e.g. {asusArch}
+		- add the following lines in the /etc/hosts file:
+			127.0.0.1	localhost
+			::1		localhost
+			127.0.1.1	asusArch.localdomain	asusArch
+
+	13. create users
+		$ passwd		-> create root password
+		$ useradd -m limegch	-> create limegch user
+		$ passwd limegch	-> set password for the new limegch user 
+		$ usermod -aG wheel,audio,video,optical,storage limegch	-> add user to groups
+		$ pacman -S sudo	-> install sudo
+		$ visudo		-> edit sudoers file and uncomment %wheel ALL=(ALL) ALL line (line 82). wheel group has all the rights and can be used with sudo
+
+	14. setup grub
+		$ pacman -S grub efibootmgr dosfstools os-prober mtools
+		$ mkdir /boot/EFI
+		$ mount /dev/sdb2 (EFI partition) /boot/EFI
+			!!! backup the mounted EFI partition
+		$ grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
+		$ grub-mkconfig -o /boot/grub/grub.cfg
+
+
+		********
+			- the previous step should be fine if windows is already installed
+			- if grub is already installed (I had a system with dual boot configured with Windows 10 (1st system) and Ubuntu (2nd system)):
+				- don't install grub
+				- boot in ubuntu and run $ sudo update-grub - it will detect the arch system and add it to grub conf
+
+
+	15. all installed - before restarting let's install NetworkManager and some much needed software
+		$ pacman -S networkmanager git
+		$ systemctl enable NetworkManager 
+
+	16. all done - exit arch-chroot and reboot
+		$ exit
+		- unmount the installed partition
+		$ unmount [-l] /mnt
+		$ reboot
+
+
+
+	* no internet after reboot - setup WiFi
+		- connect
+			$ nmtui	-> connect to wifi 
+
+
+		- didn't try all the way because it worked with nmtui -> https://wiki.archlinux.org/index.php/Wpa_supplicant
+			$ pacman -S wpa_supplicant
+			$ ip link -> get interface name - wlan0
+			$ wpa_supplicant -B -i interface -c /etc/wpa_supplicant/wpa_supplicant.conf
+			$ wpa_cli 
+				> scan
+				> add_network
+				.....
+
+
+--------------------------------------------------------------------------
+
+	1 after reboot install video driver, xorg and setup dwm
+		$ sudo pacman -S xf86-video-nouveau xorg xorg-xinit nitrogen picom feh firefox
+		$ sudo pacman -S base-devel
+		$ sudo pacman -S bash-completion ttf-font-awesome
+		$ git clone https://github.com/metingemil/dwm.git
+		$ cd dwm; cp config.def.h config.h; sudo make clean install
+		$ git clone https://github.com/metingemil/st-0.8.4.git
+		$ cd st-0.8.4; cp config.def.h; sudo make clean install
+		$ git clone https://github.com/metingemil/dmenu-5.0.git
+		$ cd dmenu-5.0; cp config.def.h; sudo make clean install
+	 	$ cp /etc/X11/xinit/xinitrc .xinitrc and change the ~/.xinitrc file by commenting last 5 lines (starting twm and xterm) and add exec dwm
+		- to startx automatically after login add in the ~/.bash_profile file the following lines:
+			 # startx loop
+			[[ $(fgconsole 2>/dev/null) == 1 ]] && exec startx --vt1
+
+
+
+
+
+------------------------------
+
+restart network:
+	$ systemctl restart NetworkManager
+ 
+--------------------------------
+
 check if Xorg server is running:
 	-> ps -ef | grep Xorg
 
@@ -61,15 +230,10 @@ ubuntu :
 
 https://www.reddit.com/r/unixporn/comments/k9lbsd/dwm_current_state_of_my_dwm_build/
 
-https://dwm.suckless.org/patches/barpadding/
-
-https://dwm.suckless.org/patches/uselessgap/
-
 https://imgur.com/a/R4dy8js
 
 
 -----------------------------
 
-30-40
 
 
