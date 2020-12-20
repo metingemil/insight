@@ -211,8 +211,8 @@ check if Xorg server is running:
 software:
 	- notepadqq		-> linux version of windowses notepad++
 	- code			-> visual studio code
-	- oh-my-bash	-> customize bash shell
-			bash -c "$(wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)"
+	- oh-my-bash		-> customize bash shell
+		bash -c "$(wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)"
 	- mc			-> midnight commander
 	- go
 	- jdk-openjdk
@@ -221,6 +221,10 @@ software:
 	- npm 
 	- ttf-font-awesome			-> awesome fonts and icons
 	- ttf-nerd-fonts-symbols	-> nerd fonts
+	- nitrogen		-> set and restore wallpaper
+	- feh			-> picture viewer
+	- picom			-> compositor
+
 
 --------------------------
 
@@ -229,7 +233,24 @@ fonts:
 	- fc-match -s "Font Awesome 5 Brands"	-> check what fonts match the string and order
 	  fc-match -s "symbols nerd font"
 
+
 --------------------------
+
+picom compositor configuration
+
+	- for customizations copy default /etc/xdg/picom.conf file to .config/picom.conf or .config/picom/picom.conf
+	- examples for opcatity rules for surf and firefox browsers
+		opacity-rule = [
+			"80:class_g *?= 'surf' && !focused",
+			"75:class_g = 'firefox' && !focused",
+			"97:class_g = 'firefox' && focused"
+		];
+	- had a problem with picom and vsync in virtualbox vm and had to disable it in the picom config (search vsync)
+
+
+
+-----------------------------
+
 
 ~/.xinitrc 
 		is only read if you start X11 with startx (or anything that calls xinit). If you log in in graphics mode, the display manager chooses a session to start. Each session manager or desktop environment has its own startup script(s), if any.
