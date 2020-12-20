@@ -141,7 +141,7 @@ arch linux installation :
 
 --------------------------------------------------------------------------
 
-	1 after reboot install video driver, xorg and setup dwm
+	1. after reboot install video driver, xorg and setup dwm
 		$ sudo pacman -S xf86-video-nouveau xorg xorg-xinit nitrogen picom feh firefox
 		$ sudo pacman -S base-devel
 		$ sudo pacman -S bash-completion ttf-font-awesome
@@ -162,9 +162,10 @@ arch linux installation :
 
 		$ pacman -S base-devel glibc webkit2gtk gcr -> needed for building surf browser 
 
+		- in order to play videos on youtube in surf browser install following packages:
+			$ sudo pacman -S gst-plugins-base gst-plugins-good gst-libav
 
-
-	2 sound problems
+	2. sound problems
 		$ pacman -S alsa-plugins alsa-utils
 		- create /etc/asound.conf or user-specific ~/.asoundrc  if it doesn't exist and select the default sound card
 			add in file : 	defaults.pcm.card 1
@@ -187,11 +188,48 @@ restart network:
  
 --------------------------------
 
+arch video drivers:
+
+	- for virtualbox vm:
+			- xf86-video-fbdev
+			- xf86-video-vesa
+			- virtualbox-guest-utils
+
+
+	- for Asus N550JV laptop - NVIDIA GeForce GT 750M   GPU
+			- xf86-video-nouveau
+			- xf86-video-vesa
+			- xf86-video-intel	-> install intel driver for backlight
+
+----------------------------------
+
 check if Xorg server is running:
 	-> ps -ef | grep Xorg
 
 -------------------------
 
+software:
+	- notepadqq		-> linux version of windowses notepad++
+	- code			-> visual studio code
+	- oh-my-bash	-> customize bash shell
+			bash -c "$(wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)"
+	- mc			-> midnight commander
+	- go
+	- jdk-openjdk
+	- nodejs
+	- gcc
+	- npm 
+	- ttf-font-awesome			-> awesome fonts and icons
+	- ttf-nerd-fonts-symbols	-> nerd fonts
+
+--------------------------
+
+fonts:
+	- fc-list	-> list installed fonts 
+	- fc-match -s "Font Awesome 5 Brands"	-> check what fonts match the string and order
+	  fc-match -s "symbols nerd font"
+
+--------------------------
 
 ~/.xinitrc 
 		is only read if you start X11 with startx (or anything that calls xinit). If you log in in graphics mode, the display manager chooses a session to start. Each session manager or desktop environment has its own startup script(s), if any.
