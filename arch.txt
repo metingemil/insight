@@ -215,6 +215,7 @@ software:
 		bash -c "$(wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)"
 	- mc			-> midnight commander
 	- go
+	- delve
 	- jdk-openjdk
 	- nodejs
 	- gcc
@@ -224,6 +225,7 @@ software:
 	- nitrogen		-> set and restore wallpaper
 	- feh			-> picture viewer
 	- picom			-> compositor
+	- neofetch		-> get system information in terminal
 
 
 --------------------------
