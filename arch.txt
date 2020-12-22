@@ -309,12 +309,44 @@ ubuntu :
 -----------------------------
 
 
-https://www.reddit.com/r/unixporn/comments/k9lbsd/dwm_current_state_of_my_dwm_build/
+lightdm
+	- install lightdm package
+	- install a greeter : lightdm-gtk-greeter (for ex)
+	- edit config fie: /etc/lightdm/lightdm.conf
+		-> greeter-session=lightdm-gtk-greeter (not necessary, it is presumed as the default greeter)
+		-> minimum-vt=1	-> by default it uses vt-7 for ubuntu
+	- config entry for each installed window manager
+		-> /usr/share/xsessions/dwm.desktop with contents:
+			[Desktop Entry]
+			Encoding=UTF-8
+			Name=Dynamic Window Manager
+			Comment=Runs the window manager defined by xsession script
+			Exec=/home/limegch/dwmstart.sh
+		-> dwmstart.sh is a script that starts dwm. the contents of the script as an example:
+			#! /bin/bash
 
-https://imgur.com/a/R4dy8js
+			# Compositor
+			picom -f &
 
+			# Wallpaper
+			nitrogen --restore &
 
+			VBoxClient-all
+
+			# dwm status
+			/home/limegch/git_repositories/dwm-bar/dwm_bar.sh 2>&1 >/dev/null &
+
+			# Loop
+			#while true; do
+			#       dwm >/dev/null 2>&1
+			#done
+
+			# Execute DWM
+			exec dwm
+	- enable lightdm service -> $ systemctl enable lightdm
+	
+
+	
 -----------------------------
-
 
 
