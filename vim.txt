@@ -1,0 +1,83 @@
+=========== .vimrc ============================
+
+
+call pathogen#infect()
+syntax on
+filetype plugin indent on
+
+colors elflord
+set number relativenumber
+" set encoding=UTF-8
+
+set showmatch
+
+" set relativenumber
+set smartcase
+set incsearch
+
+
+" set cursorline
+" set cursorlineopt=number
+" autocmd ColorScheme * highlight CursorLineNr cterm=bold term=bold gui=bold
+
+
+" Enables cursor line position tracking:
+set cursorline
+" Removes the underline causes by enabling cursorline:
+highlight clear CursorLine
+" Sets the line numbering to red background:
+highlight CursorLineNR ctermbg=red ctermfg=black
+
+
+
+
+========== installed plugins ===================
+
+1. pathogen		https://github.com/tpope/vim-pathogen
+	- Installation : 
+			$ mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+			  curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+
+	- to read the existing plugins add this to .vimrc file:
+		call pathogen#infect()
+		syntax on
+		filetype plugin indent on
+
+	- when adding a new plugin run :Helptags in vim
+
+2. NERDTree		https://github.com/preservim/nerdtree
+	- Installation : 
+			$ git clone https://github.com/preservim/nerdtree.git ~/.vim/bundle/nerdtree
+
+3. vim-devicons		https://github.com/ryanoasis/vim-devicons
+	- Installation :
+			$ git clone https://github.com/ryanoasis/vim-devicons ~/.vim/bundle/vim-devicons 
+
+4. vim-airline		https://github.com/vim-airline/vim-airline
+	- Installation :
+			$ git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
+
+	- we can also git a try to: 
+			- powerline	https://github.com/powerline/powerline 
+				and/or 
+			- lightline	https://github.com/itchyny/lightline.vim
+
+5. vim-css-coloe	https://github.com/ap/vim-css-color
+	- Installation :
+			$ git clone https://github.com/ap/vim-css-color ~/.vim/bundle/vim-css-color
+
+
+
+============= shortcuts ================================
+
+* ZZ — save+exit Vim the cool way
+* zz, zt, zb — move line of your cursor to middle, top, and bottom of your view, respectively
+* Ctrl+u, Ctrl+d — moves your view up/down half one page
+* ciw — deletes the word you’re hovering and automatically puts you in INSERT mode (change inside word)
+* C — deletes from cursor to end of line and puts you in INSERT mode
+* dt<char> — deletes from your cursor to the next instance of the character you specify (delete to <character>)
+* ~ — toggles the case [upper/lower] on the character hovered or selected (tilde; key below Esc for standard keyboards)
+* . — repeat your last Vim command (period)
+* ggvG= — auto-indent the entire file (goto beginning, enter VISUAL mode, go/select to end of file, and indent lines [==] selected)
+
+
