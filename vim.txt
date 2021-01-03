@@ -15,11 +15,9 @@ set showmatch
 set smartcase
 set incsearch
 
-
 " set cursorline
 " set cursorlineopt=number
 " autocmd ColorScheme * highlight CursorLineNr cterm=bold term=bold gui=bold
-
 
 " Enables cursor line position tracking:
 set cursorline
@@ -28,7 +26,9 @@ highlight clear CursorLine
 " Sets the line numbering to red background:
 highlight CursorLineNR ctermbg=red ctermfg=black
 
-
+let g:airline_powerline_fonts = 1
+let g:airline_theme='solarized_flood'
+let g:airline_solarized_bg='dark'
 
 
 ========== installed plugins ===================
@@ -57,12 +57,16 @@ highlight CursorLineNR ctermbg=red ctermfg=black
 	- Installation :
 			$ git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
 
-	- we can also git a try to: 
+	- we can also give a try to: 
 			- powerline	https://github.com/powerline/powerline 
 				and/or 
 			- lightline	https://github.com/itchyny/lightline.vim
 
-5. vim-css-coloe	https://github.com/ap/vim-css-color
+5. vim-airline-themes	https://github.com/vim-airline/vim-airline-themes
+	- Installation :
+			$ git clone https://github.com/vim-airline/vim-airline-themes ~/.vim/bundle/vim-airline-themes
+
+6. vim-css-color	https://github.com/ap/vim-css-color
 	- Installation :
 			$ git clone https://github.com/ap/vim-css-color ~/.vim/bundle/vim-css-color
 
