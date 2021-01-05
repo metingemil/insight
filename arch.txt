@@ -273,8 +273,8 @@ picom compositor configuration
 
 --------------------------
 
-echo $TERM	-> what terminal
-echo $0		-> what shell
+echo $TERM			-> what terminal
+echo $SHELL or echo $0		-> what shell
 
 --------------------------
 

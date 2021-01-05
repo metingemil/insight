@@ -1,6 +1,5 @@
 =========== .vimrc ============================
 
-
 call pathogen#infect()
 syntax on
 filetype plugin indent on
@@ -29,6 +28,11 @@ highlight CursorLineNR ctermbg=red ctermfg=black
 let g:airline_powerline_fonts = 1
 let g:airline_theme='solarized_flood'
 let g:airline_solarized_bg='dark'
+let g:airline#extensions#tabline#enabled = 1
+
+
+map bn :bn<CR>
+map bp :bp<CR>
 
 
 ========== installed plugins ===================
@@ -70,6 +74,9 @@ let g:airline_solarized_bg='dark'
 	- Installation :
 			$ git clone https://github.com/ap/vim-css-color ~/.vim/bundle/vim-css-color
 
+7. vim-obsession	https://github.com/tpope/vim-obsession
+	- Installation : $ git clone git://github.com/tpope/vim-obsession.git ~/.vim/bundle/vim-obsession
+			 $ vim -u NONE -c "helptags vim-obsession/doc" -c q
 
 
 ============= shortcuts ================================
