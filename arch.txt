@@ -223,11 +223,12 @@ software:
 	- ttf-font-awesome		-> awesome fonts and icons
 	- ttf-nerd-fonts-symbols	-> nerd fonts
 	- powerline-fonts		-> powerline fonts
+	- noto-fonts-emoji		-> fonts for colored emojis
 	- nitrogen		-> set and restore wallpaper
 	- feh			-> picture viewer
 	- picom			-> compositor
 	- neofetch		-> get system information in terminal
-
+	- dunst			-> notification daemon
 
 --------------------------
 
@@ -235,6 +236,23 @@ fonts:
 	- fc-list	-> list installed fonts 
 	- fc-match -s "Font Awesome 5 Brands"	-> check what fonts match the string and order
 	  fc-match -s "symbols nerd font"
+
+
+--------------------------
+
+colored emojis in st, dmenu & dwm
+
+	- install libxft-bgra (from AUR)
+		- the reason why they don't work is a bug in arch libxft package (the AUR's package contains the fix)
+	- install noto-fonts-emoji		-> fonts for colored emojis
+	- in dwm & dmenu /drw.c : find 'FcBool iscol' line and delete/comment the next paragraph
+
+        		FcBool iscol;
+        		if(FcPatternGetBool(xfont->pattern, FC_COLOR, 0, &iscol) == FcResultMatch && iscol) {
+                		XftFontClose(drw->dpy, xfont);
+                		return NULL;
+        		}
+
 
 
 --------------------------
@@ -349,5 +367,36 @@ lightdm
 
 	
 -----------------------------
+
+arch system maintenance
+
+	arch wiki system maintenance page : https://wiki.archlinux.org/index.php/System_maintenance
+
+	-  check failed systemd services
+		$ systemctl --failed
+	- check log files
+		$ sudo journalctl -p 3 -xb
+	- update packages and clear packages cache
+		$ sudo pacman -Syu ; yay -Syu
+		$ sudo pacman -Sc; yay -Sc -> deletes all cached packages that are not installed
+		$ sudo pacman -Scc; yay -Yc -> deletes everything from the cache (both installed and uninstalled)
+		$ sudo pacman -Rns $(pacman -Qdtq) -> remove orphaned packages
+	- clear oversized dirs
+		$ du -sh ~/.cache; rm -rf .cache/*
+		- same for ~/.cache, ~/.config, /var/log/journal
+		$ sudo journalctl --vacuum-time=2weeks -> only log files from the last 2 weeks 
+	- update mirror list
+		$ sudo reflector -c Romania -a 6 --sort rate --save /etc/pacman.d/mirrorlist
+
+
+-----------------------------
+
+i.e echo 'Hello World' > /dev/udp/1.1.1.1/9999
+
+
+alias date='cat </dev/tcp/time.nist.gov/13'
+
+
+
 
 

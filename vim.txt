@@ -1,4 +1,5 @@
 =========== .vimrc ============================
+set nocompatible
 
 call pathogen#infect()
 syntax on
@@ -82,6 +83,7 @@ map bp :bp<CR>
 ============= shortcuts ================================
 
 * ZZ — save+exit Vim the cool way
+* ZQ - quit+exit
 * zz, zt, zb — move line of your cursor to middle, top, and bottom of your view, respectively
 * Ctrl+u, Ctrl+d — moves your view up/down half one page
 * ciw — deletes the word you’re hovering and automatically puts you in INSERT mode (change inside word)
@@ -90,5 +92,5 @@ map bp :bp<CR>
 * ~ — toggles the case [upper/lower] on the character hovered or selected (tilde; key below Esc for standard keyboards)
 * . — repeat your last Vim command (period)
 * ggvG= — auto-indent the entire file (goto beginning, enter VISUAL mode, go/select to end of file, and indent lines [==] selected)
-
+* ^x ^f	- in insert mode -> insert file name in path
 
