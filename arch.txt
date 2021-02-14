@@ -171,7 +171,7 @@ arch linux installation :
 			add in file : 	defaults.pcm.card 1
 					defaults.ctl.card 1
 		- check sound cards and umute volume with alsamixer
-
+		- also needed to install alsa-utils (on lenovo thinkpad x220)
 
 
 ------------------------------
@@ -201,6 +201,12 @@ arch video drivers:
 			- xf86-video-vesa
 			- xf86-video-intel	-> install intel driver for backlight
 
+			- after a kernel update (around 5.10.13) - started receiving "nouveau 0000:01:00.0: bus: MMIO write of 00000002 FAULT at 4188ac [ IBUS ]" kernel error
+				-> removed xf86-video-nouveau, xf86-video-vesa, xf86-video-intel packages and installed nvidia and nvidia-settings packages
+	
+			"[Firmware Bug]: TSC_DEADLINE disabled due to Errata; please update microcode to version: 0x22 (or later)" -> installed intel-ucode package and changed /boot/grub/grub.cfg in the Arch Linux menu entry so that 'initrd	/boot/initramfs-linux.img' also contains /boot/intel-ucode.img : 'initrd	/boot/intel-ucode.img  /boot/initramfs-linux.img'
+
+
 ----------------------------------
 
 check if Xorg server is running:
@@ -219,7 +225,8 @@ software:
 	- jdk-openjdk
 	- nodejs
 	- gcc
-	- npm 
+	- npm
+	- ttf-joypixels 
 	- ttf-font-awesome		-> awesome fonts and icons
 	- ttf-nerd-fonts-symbols	-> nerd fonts
 	- powerline-fonts		-> powerline fonts
