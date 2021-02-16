@@ -226,7 +226,9 @@ software:
 	- nodejs
 	- gcc
 	- npm
-	- ttf-joypixels 
+	- ttf-joypixels
+	- ttf-mononoki (AUR)
+	- ttf-ubuntu-font-family
 	- ttf-font-awesome		-> awesome fonts and icons
 	- ttf-nerd-fonts-symbols	-> nerd fonts
 	- powerline-fonts		-> powerline fonts
@@ -236,6 +238,16 @@ software:
 	- picom			-> compositor
 	- neofetch		-> get system information in terminal
 	- dunst			-> notification daemon
+	- fzf			-> fuzzy finder - used by fzf.vim
+	- ripgrep		-> search in files - used by fzf.vim
+	- the_silver_searcher	-> search in files - used by fzf.vim
+	- xterm			-> default terminal
+	- ntfs-3g		-> mount ntfs devices
+	- cowsay
+	- cowfortune
+	- lolcat
+	- scrot			-> copy screen to image
+
 
 --------------------------
 
