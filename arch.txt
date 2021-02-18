@@ -241,6 +241,8 @@ software:
 	- fzf			-> fuzzy finder - used by fzf.vim
 	- ripgrep		-> search in files - used by fzf.vim
 	- the_silver_searcher	-> search in files - used by fzf.vim
+	- bat
+	- fd
 	- xterm			-> default terminal
 	- ntfs-3g		-> mount ntfs devices
 	- cowsay
