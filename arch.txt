@@ -333,8 +333,18 @@ sddm: -> display manager (login manager)
 
 			in dwmstart.sh  add at least $ exec dwm
 
+---------------------------
+
+dwm shortcuts:
+	Mod1-Shift-space	-> toggle focused window between tiled and floating state
+	Mod1-Button2		-> toggle focused windows between floating and tiled state
+---------------------------
+
 
 st: ctrl + shift + pageUp - increase font
+
+
+---------------------------
 
 ubuntu :
 
