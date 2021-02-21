@@ -31,6 +31,7 @@ let g:airline_theme='solarized_flood'
 let g:airline_solarized_bg='dark'
 let g:airline#extensions#tabline#enabled = 1
 
+let g:rainbow_active = 1
 
 map bn :bn<CR>
 map bp :bp<CR>
@@ -78,6 +79,15 @@ map bp :bp<CR>
 7. vim-obsession	https://github.com/tpope/vim-obsession
 	- Installation : $ git clone git://github.com/tpope/vim-obsession.git ~/.vim/bundle/vim-obsession
 			 $ vim -u NONE -c "helptags vim-obsession/doc" -c q
+8. vim-fzf		https://github.com/junegunn/fzf.vim
+
+9. vim-rainbow		https://github.com/frazrepo/vim-rainbow
+
+10. vim-commentary	https://github.com/tpope/vim-commentary
+
+11. vim-rooter		https://github.com/airblade/vim-rooter
+
+12. vim-gitgutter	https://github.com/airblade/vim-gitgutter
 
 
 ============= shortcuts ================================

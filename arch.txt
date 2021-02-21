@@ -249,6 +249,8 @@ software:
 	- cowfortune
 	- lolcat
 	- scrot			-> copy screen to image
+	- fbi			-> framebuffer image viewer
+	- fbida(fbi, fbpdf)	-> framebuffer pdf viewer
 
 
 --------------------------
