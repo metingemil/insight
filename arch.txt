@@ -419,7 +419,7 @@ arch system maintenance
 		- same for ~/.cache, ~/.config, /var/log/journal
 		$ sudo journalctl --vacuum-time=2weeks -> only log files from the last 2 weeks 
 	- update mirror list
-		$ sudo reflector -c Romania -a 6 --sort rate --save /etc/pacman.d/mirrorlist
+		$ sudo reflector -c Romania -a 6 --sort rate --save /etc/pacman.d/mirrorlist -p https
 
 
 -----------------------------
