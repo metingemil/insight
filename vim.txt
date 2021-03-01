@@ -95,6 +95,7 @@ map bp :bp<CR>
 * ZZ — save+exit Vim the cool way
 * ZQ - quit+exit
 * zz, zt, zb — move line of your cursor to middle, top, and bottom of your view, respectively
+* H, M, L - move cursor to top,middle,bottom of the screen(High,Middle,Low)
 * Ctrl+u, Ctrl+d — moves your view up/down half one page
 * ciw — deletes the word you’re hovering and automatically puts you in INSERT mode (change inside word)
 * C — deletes from cursor to end of line and puts you in INSERT mode
