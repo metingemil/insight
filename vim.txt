@@ -89,6 +89,8 @@ map bp :bp<CR>
 
 12. vim-gitgutter	https://github.com/airblade/vim-gitgutter
 
+13. vim-go		https://github.com/fatih/vim-go
+
 
 ============= shortcuts ================================
 
@@ -96,12 +98,36 @@ map bp :bp<CR>
 * ZQ - quit+exit
 * zz, zt, zb — move line of your cursor to middle, top, and bottom of your view, respectively
 * H, M, L - move cursor to top,middle,bottom of the screen(High,Middle,Low)
+
+
+
+* 0 - go to start on line
+* $ - go to end on line
+
 * Ctrl+u, Ctrl+d — moves your view up/down half one page
+
 * ciw — deletes the word you’re hovering and automatically puts you in INSERT mode (change inside word)
 * C — deletes from cursor to end of line and puts you in INSERT mode
+
 * dt<char> — deletes from your cursor to the next instance of the character you specify (delete to <character>)
+* dw - delete from the cursor to start of next word
+* de - delete from cursor to end of current word
+* d$ - delete from the cursor to end of line
+
+* f<char> - move cursor to next <char> in line
+* i - insert before the cursor
+* I - insert at the begining of line
+* a - insert after the cursor
+* A - insert at the end of current line
+
+* u - undo
+* U - undo whole line
+* ctrl+r - redo
+
 * ~ — toggles the case [upper/lower] on the character hovered or selected (tilde; key below Esc for standard keyboards)
 * . — repeat your last Vim command (period)
 * ggvG= — auto-indent the entire file (goto beginning, enter VISUAL mode, go/select to end of file, and indent lines [==] selected)
 * ^x ^f	- in insert mode -> insert file name in path
+
+* % - match parantheses
 
