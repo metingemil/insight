@@ -128,7 +128,9 @@ nnoremap <c-s> :w<cr>
 * ~ — toggles the case [upper/lower] on the character hovered or selected (tilde; key below Esc for standard keyboards)
 * . — repeat your last Vim command (period)
 * ggvG= — auto-indent the entire file (goto beginning, enter VISUAL mode, go/select to end of file, and indent lines [==] selected)
-* ^x ^f	- in insert mode -> insert file name in path
+
+* ctrl-x ctrl-f	- in insert mode -> insert file name in path
+* ctrl-p - in insert mode - code completion
 
 * % - match parantheses
 
