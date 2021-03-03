@@ -7,8 +7,9 @@ filetype plugin indent on
 
 colors elflord
 set number relativenumber
-" set encoding=UTF-8
+set encoding=UTF-8
 
+set showcmd
 set showmatch
 
 " set relativenumber
@@ -35,7 +36,7 @@ let g:rainbow_active = 1
 
 map bn :bn<CR>
 map bp :bp<CR>
-
+nnoremap <c-s> :w<cr>
 
 ========== installed plugins ===================
 
@@ -99,7 +100,7 @@ map bp :bp<CR>
 * zz, zt, zb — move line of your cursor to middle, top, and bottom of your view, respectively
 * H, M, L - move cursor to top,middle,bottom of the screen(High,Middle,Low)
 
-
+* ctrl+w - jump to a different windows
 
 * 0 - go to start on line
 * $ - go to end on line
