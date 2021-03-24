@@ -251,7 +251,7 @@ software:
 	- flameshot		-> copy screen to image
 	- fbi			-> framebuffer image viewer
 	- fbida(fbi, fbpdf)	-> framebuffer pdf viewer
-
+	- dash			-> modern posix impl of /bin/sh (ln -sfT dash /usr/bin/sh)
 
 --------------------------
 
