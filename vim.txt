@@ -34,9 +34,14 @@ let g:airline#extensions#tabline#enabled = 1
 
 let g:rainbow_active = 1
 
+"X bug - keep yanked text in system clipboard after vim exit
+autocmd VimLeave * call system("xclip -selection clipboard -i", getreg('+'))
+
 map bn :bn<CR>
 map bp :bp<CR>
+
 nnoremap <c-s> :w<cr>
+inoremap <c-s> <c-o>:w<cr>
 
 ========== installed plugins ===================
 
@@ -100,12 +105,14 @@ nnoremap <c-s> :w<cr>
 * zz, zt, zb — move line of your cursor to middle, top, and bottom of your view, respectively
 * H, M, L - move cursor to top,middle,bottom of the screen(High,Middle,Low)
 
-* ctrl+w - jump to a different windows
+* ctrl-w - jump to a different windows
 
 * 0 - go to start on line
 * $ - go to end on line
 
-* Ctrl+u, Ctrl+d — moves your view up/down half one page
+* ctrl-u, ctrl-d — moves up/down half a page
+* ctrl-b, ctrl-f - move back/forward one full page
+* ctrl-y, ctrl-e - move screen up/down one line without moving the cursor
 
 * ciw — deletes the word you’re hovering and automatically puts you in INSERT mode (change inside word)
 * C — deletes from cursor to end of line and puts you in INSERT mode
@@ -120,10 +127,12 @@ nnoremap <c-s> :w<cr>
 * I - insert at the begining of line
 * a - insert after the cursor
 * A - insert at the end of current line
+* o - append a new line below the current line and enter insert mode
+* O - append a new line above the current line and enter insert mode
 
 * u - undo
 * U - undo whole line
-* ctrl+r - redo
+* ctrl-r - redo
 
 * ~ — toggles the case [upper/lower] on the character hovered or selected (tilde; key below Esc for standard keyboards)
 * . — repeat your last Vim command (period)
@@ -133,4 +142,29 @@ nnoremap <c-s> :w<cr>
 * ctrl-p - in insert mode - code completion
 
 * % - match parantheses
+
+* ctrl-v - enter visual block mode
+	 - select untill the last line to modify
+  I	 - (shift-i) enter block insert mode
+	 - make desirect changes (this happen on the first line)
+  Esc	 - after escape is pressed the changes are applied to all selected lines
+
+* ctrl-t, ctrl-d - indent current linke forward/backward in insert mode
+* >, < - in linewise visual mode - indent selected text (repeat with .)
+* >>, << - in normal mode - indent current line and go to start of line
+
+* ctrl-rx - in insert mode - inserts the contents of register x
+ 
+* V= - reformat selected text
+* =  - correct alignment of code
+* == - reformat one line
+
+
+ 
+============= resources ================================
+
+vimtutor
+https://www.cs.oberlin.edu/~kuperman/help/vim/home.html
+https://vim.rtorr.com/lang/en_us/
+
 
