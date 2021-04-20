@@ -1,3 +1,7 @@
+console.log(0.1 + 0.1)
+console.log(0.1 + 0.1 + 0.1)
+console.log(0.1 + 0.1 + 0.1 == 0.3)
+
 function multiplier(factor) {
     return number => number * factor;
 }
