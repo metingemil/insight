@@ -338,8 +338,12 @@ sddm: -> display manager (login manager)
 ---------------------------
 
 dwm shortcuts:
+
 	Mod1-Shift-space	-> toggle focused window between tiled and floating state
 	Mod1-Button2		-> toggle focused windows between floating and tiled state
+	[Shift]+[Mod]+[, / .]   -> move active window to different screen
+
+
 ---------------------------
 
 
