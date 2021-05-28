@@ -86,7 +86,8 @@ inoremap <c-s> <c-o>:w<cr>
 	- Installation : $ git clone git://github.com/tpope/vim-obsession.git ~/.vim/bundle/vim-obsession
 			 $ vim -u NONE -c "helptags vim-obsession/doc" -c q
 8. vim-fzf		https://github.com/junegunn/fzf.git
-
+			and
+			https://github.com/junegunn/fzf.vim.git
 9. vim-rainbow		https://github.com/frazrepo/vim-rainbow
 
 10. vim-commentary	https://github.com/tpope/vim-commentary
