@@ -252,7 +252,8 @@ software:
 	- fbi			-> framebuffer image viewer
 	- fbida(fbi, fbpdf)	-> framebuffer pdf viewer
 	- dash			-> modern posix impl of /bin/sh (ln -sfT dash /usr/bin/sh)
-
+	- vifm			-> terminal window manager
+	- ranger		-> terminal window manager
 --------------------------
 
 fonts:
@@ -350,18 +351,6 @@ dwm shortcuts:
 st: ctrl + shift + pageUp - increase font
 
 
----------------------------
-
-ubuntu :
-
-	- $ sudo systemctl set-default multi-user	-> disable gui  (reboot required)
-	- $ sudo systemctl set-default graphical	-> enable gui
-	- $ sudo systemctl start gdm3				-> start gui manually (the GDM(gnome display manager) display manager)
-	- $ from cmd line 	-> $ startx
-						-> $ gnome-session-quit
-
-
-
 -----------------------------
 
 
@@ -401,6 +390,16 @@ lightdm
 			exec dwm
 	- enable lightdm service -> $ systemctl enable lightdm
 	
+
+-----------------------------
+
+in order to startx ar login -> add this at the start of shell's config file
+
+if status is-login
+   if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
+      exec startx -- -keeptty
+   end
+end
 
 	
 -----------------------------
