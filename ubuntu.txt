@@ -1,3 +1,5 @@
+sudo dmidecode -t system	-> get system information in human readable format
+
 packages:
 	- arandr	->  another xrandr gui
 	- pavucontrol	-> a volume control for pulseaudio sound server
@@ -108,5 +110,40 @@ $ systemclt status display-manager	-> when a login manager is enabled this servi
 		GRUB_CMDLINE_LINUX="console=tty1"  # Redirect the kernel output to another tty / jump to tty after boot
 		
 	- run $ sudo update-grub2  to apply the grub config file
+
+
+--------------------------------------------
+* using nvidia proprietary drivers
+
+	$ ubuntu-drivers devices	-> list nvidia available drivers
+
+	$ sudo apt install mesa-utils
+	$ glxgears			-> basic video test
+	$ vlbank_mode=0 glxgears	-> ignore display refresh rate
+	
+	$ glxinfo | grep OpenGL		-> get the used graphic device
+	$ glxinfo -B
+	$ glxinfo|egrep "OpenGL vendor|OpenGL renderer"
+	$ DRI_PRIME=1 glxinfo | grep OpenGL	-> DRI_PRIME=1 -> use nouveau driver
+
+	$ lspci -k | grep -A 2 -E "(VGA|3D)"	-> check video devices on system
+
+	$ sudo apt install glmark2
+	$ DRI_PRIME=1 glmark2 --fullscreen --show-all-options -> graphics test
+
+	$ nvidia-setting	-> graphics gui the select used GPU (PRIME Profiles menu item)
+
+	$ nvidia-smi		-> list what processes uses nvidia gpu
+	$ prime-select		-> select used GPU (prime-select query; sudo prime-select nvidia; sudo prime-select intel)
+	$ sudo lshw -c video	-> list video hardware
+	$ lshw -numeric -C display
+
+
+
+
+
+
+
+
 
 
