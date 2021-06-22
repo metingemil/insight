@@ -113,6 +113,8 @@ $ systemclt status display-manager	-> when a login manager is enabled this servi
 
 
 --------------------------------------------
+
+
 * using nvidia proprietary drivers
 
 	$ ubuntu-drivers devices	-> list nvidia available drivers
@@ -139,8 +141,26 @@ $ systemclt status display-manager	-> when a login manager is enabled this servi
 	$ lshw -numeric -C display
 
 
+--------------------------------------------------------
+
+enable tap to click on touchpad:
+
+	$ sudo apt install xserver-xorg-input-libinput
+	-> create /etc/X11/xorg.conf.d/40-libinput.conf
+	-> add the following section to file:
+
+		Section "InputClass"
+		        Identifier "libinput touchpad catchall"
+		        MatchIsTouchpad "on"
+		        MatchDevicePath "/dev/input/event*"
+		        Driver "libinput"
+		        Option "Tapping" "on"
+		EndSection
+		
+	-> restart DM
 
 
+--------------------------------------------------------
 
 
 
