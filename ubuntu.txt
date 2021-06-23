@@ -164,6 +164,100 @@ enable tap to click on touchpad:
 
 
 
+LUKS encryption in ubuntu :
+
+
+sudo lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL
+daca nu ai partitiile sub un sudo lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL
+└─nvme0n1p3_crypt   LVM2_member 952,7G
+sub o partie d'asta cu _crypt, atunci nu va merge vpn-u
+└─nvme0n1p3           crypto_LUKS 952,7G                              
+ └─nvme0n1p3_crypt   LVM2_member 952,7G
+
+
+
+marbarbu@5CD1057448R:~/quasar$ sudo lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL
+NAME                  FSTYPE       SIZE MOUNTPOINT                  LABEL
+loop0                 squashfs   199,4M /snap/code/62                
+loop1                 squashfs    99,2M /snap/core/10958             
+loop2                 squashfs    64,8M /snap/gtk-common-themes/1514 
+loop3                 squashfs    55,5M /snap/core18/1988            
+loop4                 squashfs    55,5M /snap/core18/1997            
+loop5                 squashfs    99,2M /snap/core/10908             
+loop6                 squashfs    65,1M /snap/gtk-common-themes/1515 
+loop7                 squashfs   162,9M /snap/gnome-3-28-1804/145    
+loop8                 squashfs   191,6M /snap/mailspring/505         
+loop9                 squashfs   179,6M /snap/spotify/46             
+loop10                squashfs   220,4M /snap/code/63                
+loop11                squashfs   191,8M /snap/mailspring/502         
+nvme0n1                           953,9G                              
+├─nvme0n1p1           vfat         512M /boot/efi                    
+├─nvme0n1p2           ext4         732M /boot                        
+└─nvme0n1p3           crypto_LUKS 952,7G                              
+ └─nvme0n1p3_crypt   LVM2_member 952,7G                              
+   ├─vgkubuntu-root  ext4       930,4G /                            
+   └─vgkubuntu-swap_1 swap         976M
+
+
+
+-> get system info
+	$sudo dmidecode -t system
+
+https://medium.com/@chrishantha/encrypting-disks-on-ubuntu-19-04-b50bfc65182a
+
+
+----------------------------------------------
+
+from ubuntu live usb:
+	-> use 'gpt' partition table
+	-> create desired partitions using gparted
+		/dev/nvme0n1
+			-> nvme0n1p1 - 512 MB  fat32 with boot, esp flags
+			-> nvme0n1p2 - 732 MB ext4   for /boot mount
+			-> nvme0n103 - 952.6 GB  ext4  -> this will be the LUKS encrypted partition
+
+........ under the enctypted partitions I will create 3 logical volumes for /, /home and swap partitions 
+
+	$ sudo cryptsetup luksFormat --hash=sha512 --key-size=512 /dev/nvme0n1p3
+	$ sudo cryptsetup open --type=luks /dev/nvme0n1p3 nvme0n1p3_crypt
+
+	$ sudo pvcreate /dev/mapper/nvme0n1p3_crypt
+	$ sudo vgcreate vgubuntu /dev/mapper/nvme0n1p3_crypt
+	$ sudo lvcreate -n lv_root -L 80G vgubuntu
+	$ sudo lvcreate -n lv_home -L 808.6G vgubuntu
+	$ sudo lvcreate -n lv_swap -L 64G vgubuntu
+
+..... run installer and choose 'Something else' on installation type
+
+..... after installation choose 'Continue Testing' to make changes to load encrypted partitions at startup 
+
+	$ lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL
+	$ sudo blkid /dev/nvme0n1p3	-> save UUID value
+
+...... mount installed OS on /mnt and chroot into int
+
+	$ sudo mount /dev/mapper/vgubuntu-lv_root /mnt
+	$ sudo mount /dev/nvme0n1p2 /mnt/boot
+	$ sudo mount /dev/mapper/vgubuntu-lv_home /mnt/home
+	$ sudo mount --bind /dev /mnt/dev
+	$ sudo chroot /mnt
+	$ mount -t proc proc /proc
+	$ mount -t sysfs sys /sys
+	$ mount -t devpts devpts /dev/pts
+
+...... create /etc/crypttab file
+
+	$ nano /etc/crypttab
+	
+add line: nvme0n1p3_crypt UUID="uuid from sudo blkid /dev/nvme0n1p3 command ran earlier" none luks,discard
+	
+	$ update-initramfs -k all -c
+
+.... reboot ... all done
+
+
+-------------------------------------------------
+
 
 
 
