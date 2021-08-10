@@ -130,7 +130,9 @@ inoremap <c-s> <c-o>:w<cr>
 * A - insert at the end of current line
 * o - append a new line below the current line and enter insert mode
 * O - append a new line above the current line and enter insert mode
-
+* J - join current line with the next line (removing the newline) (this adds a space between lines)
+ gJ - join current line with the next line (removing the newline)
+ 3J - joins 3 lines together
 * u - undo
 * U - undo whole line
 * ctrl-r - redo
