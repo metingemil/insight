@@ -254,6 +254,8 @@ software:
 	- dash			-> modern posix impl of /bin/sh (ln -sfT dash /usr/bin/sh)
 	- vifm			-> terminal window manager
 	- ranger		-> terminal window manager
+	- starship		-> starship command prompt
+	- auto-cpufreq		-> preserve laptop battery https://github.com/AdnanHodzic/auto-cpufreq
 --------------------------
 
 fonts:
