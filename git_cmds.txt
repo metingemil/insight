@@ -23,7 +23,7 @@ cat .git/config
 
 git remote add [remote_name] [repository] -> add a remote repository
 
-
+git merge [dest_branch] [source_branch] --allow-unrelated-histories -> merge source_branch on top of dest_branch
 
 git commit --amend -> change last commit
 
@@ -61,3 +61,4 @@ git cat-file -p [named commit]  -> print commit file contents
 git update-index --skip-worktree(--no-skip-worktree) [file]   -> skip(unskip) unstaged changes once added to .git/info/exclude
 
 git remote -v  -> view remote
+
