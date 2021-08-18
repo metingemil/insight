@@ -10,7 +10,9 @@ git push -u(--set-upstream) origin [branch]  -> create branch on remote
 
 git branch  [branch]
 
-git branch [branch] (--set-upstream-to=[origin/branch]) (git checkout -b [branch])  -> create local branch  (also set upstream track) (create local branch and move to it)
+git branch [branch] (--set-upstream-to=[origin/branch])  -> create local branch  (also set upstream track)
+
+git checkout -b [branch] --track [remote/remote_branch] -> create local branch and move to it, optionally set tracking branch
 
 git branch --set-upstream-to=[origin/branch]) -> change tracking branch for the current branch
 
@@ -18,6 +20,10 @@ git pull --rebase - pull changes from remote and reapply local changes
 
 git status -b --porcelain  -> show which remote branch is tracking
 cat .git/config
+
+git remote add [remote_name] [repository] -> add a remote repository
+
+
 
 git commit --amend -> change last commit
 
