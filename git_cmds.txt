@@ -23,6 +23,8 @@ cat .git/config
 
 git remote add [remote_name] [repository] -> add a remote repository
 
+git remote set-url origin git@github.com:metingemil/surf.git -> change remote repo url
+
 git merge [dest_branch] [source_branch] --allow-unrelated-histories -> merge source_branch on top of dest_branch
 
 git commit --amend -> change last commit
