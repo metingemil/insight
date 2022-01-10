@@ -54,7 +54,29 @@ lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s
 
 git log --decorate -> show positional references
 
-git lg  HEAD..origin/master  -> show log of new commits on origin master branch and not yet merged on local branch
+git log start-branch..end-branch -> show all commits reachable from end-branch that are not reachable from start-branch (basically what is new in end-branch)
+	equivalent to git log ^start-branch end-branch
+
+	git log start-branch...end-branch -> three dots - finds all commits that are reachable from start-branch, OR that are reachable from end-branch BUT that are NOT reachable from both start-branch AND end-branch.
+
+	git lg  HEAD..origin/master  -> show log of new commits on origin master branch and not yet merged on local branch
+
+	e.g.
+	             H--I--J  topicB
+	            /
+        	    | E---F---G  topicA
+	            |/
+	A---B---C---D  master
+
+	git log topicB..topicA -> G, F, E
+	git log topicB...topicA -> G, F, E,J,I,H
+
+
+	git lg merge-commit^..merge-commit -> what new commits from merge-commit
+
+		commit^ equivalent to commit^1  -> means the first side commit of merge
+				      commit^2  -> the 2nd side of merge commit
+
 
 git cherry-pick [named commit]	->  cheryy pick a single commit from another branch to be included
 
