@@ -1,6 +1,13 @@
 ==================== .tmux.conf ============================== 
-set -g default-terminal "screen-256color"                                                             
-                                                                                                       
+set -g default-terminal "tmux-256color"
+                                                                                                      
+set-option -g default-command "/bin/zsh"
+
+setw -q -g utf8 on
+
+# Set display time for pane numbers
+set -g display-panes-time 5000
+
 # Make mouse useful in copy mode                                                                       
 # setw -g mouse on                                                                                     
                                                                                                        
