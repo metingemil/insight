@@ -275,5 +275,15 @@ when starting java swing gui apps - the gui won't show - for example visualvm
 
 --------------------------------------------------
 
+when running dwm window manager - in order to set theme/icons/fonts to gtk applications (nautilus, gnome-control-center)
+	$ export XDG_CONFIG_HOME=~/.local/xdg_config
+	in ~/.local/xdg_config/gtk-3.0 (for gtk3 - find out which gtk version with $ gtk-launch --version) create settings.ini file with:
+		[Settings]
+		gtk-application-prefer-dark-theme = true
+		gtk-icon-theme-name = DMZ-Black
+		gtk-theme-name = Adwaita-dark
+		gtk-font-name = mononoki 12
 
+ themes and icons for ubuntu are found in : /usr/share/themes & /usr/share/icons
 
+---------------------------------------------------
