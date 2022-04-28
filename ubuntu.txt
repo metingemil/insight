@@ -258,6 +258,22 @@ add line: nvme0n1p3_crypt UUID="uuid from sudo blkid /dev/nvme0n1p3 command ran 
 
 -------------------------------------------------
 
+gnome-control-center - segmentation fault when running in dwm 
+	gdb output : 
+			Thread 1 "gnome-control-c" received signal SIGSEGV, Segmentation fault.
+			__strstr_sse2_unaligned () at ../sysdeps/x86_64/multiarch/strstr-sse2-unaligned.S:40
+			40	../sysdeps/x86_64/multiarch/strstr-sse2-unaligned.S: No such file or directory.
+
+
+temp fix : reset last panel with  $ gsettings set org.gnome.ControlCenter last-panel ''
+
+--------------------------------------------------
+
+when starting java swing gui apps - the gui won't show - for example visualvm
+
+ -> to fix run $ wmname compiz  before starting program
+
+--------------------------------------------------
 
 
 
