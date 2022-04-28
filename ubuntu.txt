@@ -276,6 +276,12 @@ when starting java swing gui apps - the gui won't show - for example visualvm
 --------------------------------------------------
 
 when running dwm window manager - in order to set theme/icons/fonts to gtk applications (nautilus, gnome-control-center)
+	1st solution
+		if XDG_CONFIG_HOME is not defined - the system uses ~/.config as the location for configurarion files, this means settings.ini goes to 
+		~/.config/gtk-3.0   - with the contents on 2nd soluton
+
+
+	2nd solution
 	$ export XDG_CONFIG_HOME=~/.local/xdg_config
 	in ~/.local/xdg_config/gtk-3.0 (for gtk3 - find out which gtk version with $ gtk-launch --version) create settings.ini file with:
 		[Settings]
@@ -286,4 +292,7 @@ when running dwm window manager - in order to set theme/icons/fonts to gtk appli
 
  themes and icons for ubuntu are found in : /usr/share/themes & /usr/share/icons
 
+
 ---------------------------------------------------
+
+
