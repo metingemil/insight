@@ -43,6 +43,8 @@ map bp :bp<CR>
 nnoremap <c-s> :w<cr>
 inoremap <c-s> <c-o>:w<cr>
 
+set spell spelllang=en_us
+
 ========== installed plugins ===================
 
 1. pathogen		https://github.com/tpope/vim-pathogen
