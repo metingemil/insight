@@ -163,13 +163,28 @@ set spell spelllang=en_us
 * >>, << - in normal mode - indent current line and go to start of line
 
 * ctrl-rx - in insert mode - inserts the contents of register x
- 
+
 * V= - reformat selected text
 * =  - correct alignment of code
 * == - reformat one line
 
+set spell  -> enable spell checking
+set nospell -> disable spell checking
+set list -> enable show all characters(eol, tabs ..)
+set nolist -> disable showing all characters   
 
- 
+set spell spelllang=en_us -> set the spelling language
+set listchars=eol:^,tab:>-,trail:~,extends:>,precedes:<
+
+]s - find the misspelled word after cursor
+[s - find the misspelled word before cursor
+]S - find bad words after cursor
+[S - find bad words before cursor
+z= - find suggestions
+ctrl-xs - show suggestions when in insert mode 
+zg - add correct word to dictionary
+ZW - mark incorrect word 
+
 ============= resources ================================
 
 vimtutor
