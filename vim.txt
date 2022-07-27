@@ -113,6 +113,7 @@ set spell spelllang=en_us
 * ctrl-w < - increase vertical split window to left 
 * ctrl-w - - increase horizontal split window down 
 * ctrl-w + - increase horizontal split window up 
+* ctrl-w q - quit split
 
 * 0 - go to start on line
 * $ - go to end on line
