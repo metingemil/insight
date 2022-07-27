@@ -1,0 +1,69 @@
+
+# call https rest method and print on stdout
+	$ wget --no-check-certificate --auth-no-challenge --user=admin --password='admin' -qO - https://localhost:8000/api/filters/76 | jq --color-output | batcat
+
+
+# find string in files -> page it by using colors
+
+	$ rg --hidden -iup adopt -g '!{.git,.svn,node_modules,.nyc_output,dist,*.out,*.html,*.md}' | batcat -p
+	
+	$ grep -i err -r /opt/mss/stack/logs/*ixia-nto-stack.log*
+
+	$ rg 'err' -C 2 -ipg  'Main-Board_stack-logs_ixia-nto-stack.log*'
+	
+	$ ag --color 'ERR' -C 5 -i -G 'Main-Board_stack-logs_ixia-nto-stack.log*'
+
+
+	-i -> ignore case
+	-C 5 -> context no lines before and after 
+	-u -> ignore .gitignore
+	--hidden -> search in hidden files and directories
+	-g -> glob pattern
+
+
+# replace string in multiple files
+
+	$ grep -r -l "[old_string]" testdata/independent_mp_with_behaviors_test/ | xargs sed -i 's/old_string/new_string/g'
+
+
+========== VScode =========
+
+ctrl+k+s -> view keyboard shortcuts
+
+ctrl + alt + - -> go back
+
+ctrl+k ctrl+0 -> fold all
+
+ctrl+k ctrl+j -> unfold all
+
+ctrl + shift + i -> format document
+
+alt + shift +  o -> arrange imports
+
+============================
+
+sudo iptables -A INPUT -p tcp --dport 8098  -j ACCEPT   -> open tcp port with iptables
+
+
+=============================
+
+
+snmpwalk  -v 2c -c public 10.38.185.158:161 .1.3.6.1.4.1.32620.1.1.1.12.3.1
+
+wget --no-check-certificate --auth-no-challenge --user=admin --password='admin' -qO - https://10.38.185.158:8000/api/cte_members
+
+wget 'https://admin:admin@localhost:8000/api/cte_members' -qO
+
+
+---
+vi /usr/riak/etc/riak.conf
+
+riak-admin bucket-type list
+
+wget -qO - 'http://10.38.185.161:8098/types/cte_config/buckets?buckets=true'
+
+wget -qO - 'http://10.38.185.161:8098/types/cte_config/buckets/cte_member/keys?keys=true'
+
+wget -qO - 'http://10.38.185.161:8098/types/cte_config/buckets/cte_member/keys?keys=b9eeaf6a-16ca-39f3-bdf5-7620aed91b62'
+
+
