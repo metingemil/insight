@@ -1,15 +1,29 @@
 =========== shortcuts ===========================
 
-Ctrl + A : Go to the beginning of the line you are currently typing on
+ctrl + a : Go to the beginning of the line you are currently typing on
 
-Ctrl + E : Go to the end of the line you are currently typing on
+ctrl + e : Go to the end of the line you are currently typing on
 
-Ctrl + R : commands history
+alt + f  : move forward one word
 
-Ctrl + W : Cut the word before the cursor
+alt + b  : move backward one work
 
-Ctrl + K : Cut the part of the line after the cursor
+ctrl + r : commands history
 
-Ctrl + U : Cut the part of the line before the cursor
+ctrl + w : Cut the word before the cursor
 
-Ctrl + Y : Paste the last text that was cut or copied.
+ctrl + k : Cut the part of the line after the cursor
+
+ctrl + u : Cut the part of the line before the cursor
+
+ctrl + y : Paste the last text that was cut or copied.
+
+  -> https://github.com/junegunn/fzf/blob/master/shell/completion.zsh
+
+  alt + c : fzf change selected directory widget
+
+  ctrl + r : fzf history widget
+
+  ctrl + t : paste selected file path intro cmd line widget
+
+
