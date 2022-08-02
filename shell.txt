@@ -8,9 +8,11 @@ alt + f  : move forward one word
 
 alt + b  : move backward one work
 
+alt + d  : delete forward one word
+
 ctrl + r : commands history
 
-ctrl + w : Cut the word before the cursor
+ctrl + w : delete the word before the cursor
 
 ctrl + k : Cut the part of the line after the cursor
 
