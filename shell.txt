@@ -8,6 +8,10 @@ alt + f  : move forward one word
 
 alt + b  : move backward one work
 
+ctrl + f : move forward (or use the right arrow)
+
+ctrl + b : move backward (or use the left arrow)
+
 alt + d  : delete forward one word
 
 ctrl + r : commands history
