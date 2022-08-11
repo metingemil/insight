@@ -43,6 +43,21 @@ map bp :bp<CR>
 nnoremap <c-s> :w<cr>
 inoremap <c-s> <c-o>:w<cr>
 
+"fzf window toggle down instead of modal screen
+let g:fzf_layout = { 'down': '40%'}
+
+" This is the default option:
+"   - Preview window on the right with 50% width
+"   - CTRL-/ will toggle preview window.
+" - Note that this array is passed as arguments to fzf#vim#with_preview function.
+" - To learn more about preview window options, see `--preview-window` section of `man fzf`.
+let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+
+nnoremap <Leader>p :FZF<CR>
+nnoremap <Leader>P :Files<CR>
+nnoremap <Leader>F :Rg <C-r><C-w><CR>
+nnoremap <Leader>l :Lines <C-r><C-w><CR>
+
 set spell spelllang=en_us
 
 ========== installed plugins ===================
