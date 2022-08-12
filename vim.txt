@@ -43,6 +43,9 @@ map bp :bp<CR>
 nnoremap <c-s> :w<cr>
 inoremap <c-s> <c-o>:w<cr>
 
+"set runtimepath for fzf
+set rtp+=~/git_repos/fzf
+
 "fzf window toggle down instead of modal screen
 let g:fzf_layout = { 'down': '40%'}
 
