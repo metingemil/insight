@@ -5,7 +5,7 @@
 
 # find string in files -> page it by using colors
 
-	$ rg --hidden -iup adopt -g '!{.git,.svn,node_modules,.nyc_output,dist,*.out,*.html,*.md}' | batcat -p
+	$ rg --hidden --sort=path -iup adopt -g '!{.git,.svn,node_modules,.nyc_output,dist,*.out,*.html,*.md}' | batcat -p
 	
 	$ grep -i err -r /opt/mss/stack/logs/*ixia-nto-stack.log*
 
@@ -19,6 +19,8 @@
 	-u -> ignore .gitignore
 	--hidden -> search in hidden files and directories
 	-g -> glob pattern
+	--sort=path -> sort/sortr by path
+	-e  -> search for pattern
 
 
 # replace string in multiple files
