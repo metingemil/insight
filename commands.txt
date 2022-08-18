@@ -69,3 +69,18 @@ wget -qO - 'http://10.38.185.161:8098/types/cte_config/buckets/cte_member/keys?k
 wget -qO - 'http://10.38.185.161:8098/types/cte_config/buckets/cte_member/keys?keys=b9eeaf6a-16ca-39f3-bdf5-7620aed91b62'
 
 
+--------
+
+mount windows share - must install cifs-utils package
+
+   $ sudo mount.cifs '\\annnas1.ann.is.keysight.com\CrossDept\' winShare -o user=metgemil
+
+
+connect via smbclient and get or put file
+
+   $ smbclient '\\annnas1.ann.is.keysight.com\CrossDept\' -U AD.DOMAIN.COM\\metgemil
+
+	use ls, cd , get , put commands to navigate, copy from/to
+
+
+---------
