@@ -127,10 +127,13 @@ set spell spelllang=en_us
 * H, M, L - move cursor to top,middle,bottom of the screen(High,Middle,Low)
 
 * ctrl-w - jump to a different windows
-* ctrl-w > ( ctrl-w8> ) - increase vertical split window to right (by size 8)
-* ctrl-w < - increase vertical split window to left 
+* ctrl-w, shift > ( ctrl-w8> ) - increase vertical split window to right (by size 8)
+* ctrl-w, shift < - increase vertical split window to left 
 * ctrl-w - - increase horizontal split window down 
-* ctrl-w + - increase horizontal split window up 
+* ctrl-w + - increase horizontal split window up
+* ctrl-w arrow_up/down,left,right(j,k,h,l) -  navigate splits
+* ctrl-w v -> split window vertically
+* ctrl-w s -> split window horizontally 
 * ctrl-w q - quit split
 
 * 0 - go to start on line
