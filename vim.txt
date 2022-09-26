@@ -126,6 +126,25 @@ set spell spelllang=en_us
 * zz, zt, zb — move line of your cursor to middle, top, and bottom of your view, respectively
 * H, M, L - move cursor to top,middle,bottom of the screen(High,Middle,Low)
 
+* e - move forward to the end of a word
+* w - move forward to the begining of a word
+* 3w - move forward three words
+* W - move forward a word
+* b - move backward to the begining of a word
+* 3b - move backwards three words
+* 0 - go to start on line
+* $ - go to end on line
+* ) - jump fwd one sentence
+* ( - jump back one sentence
+* } - jump fwd one paragraph
+* { - jump back one paragraph 
+* G - jump to the end of the file
+* gg - jump to the start of the file
+* g; - jump to last edit 
+* " - return to the line where the cursor was before the latest jump
+* `` - return to the cursor position before the latest jump (undo the jump)
+
+
 * ctrl-w - jump to a different windows
 * ctrl-w, shift > ( ctrl-w8> ) - increase vertical split window to right (by size 8)
 * ctrl-w, shift < - increase vertical split window to left 
@@ -135,9 +154,6 @@ set spell spelllang=en_us
 * ctrl-w v -> split window vertically
 * ctrl-w s -> split window horizontally 
 * ctrl-w q - quit split
-
-* 0 - go to start on line
-* $ - go to end on line
 
 * ctrl-u, ctrl-d — moves up/down half a page
 * ctrl-b, ctrl-f - move back/forward one full page

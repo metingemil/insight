@@ -38,6 +38,8 @@ git reset [named commit] -> set the current branch HEAD to named commit
 
 git reset --hard origin/master -> reset local master branch to origin/master (! this will lose data - be carefull, i'm using this when by mistake I commit to master branch instead of commiting to dev branch)
 
+git reset --merge HEAD~1 -> undo last merge commit
+
 git rebase -i HEAD~3 -> interactive rebase last 3 commits beafore HEAD
 
 git revert commit -> automatically creates a new commit with opposite changes
