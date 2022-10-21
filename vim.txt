@@ -118,6 +118,8 @@ set spell spelllang=en_us
 
 13. vim-go		https://github.com/fatih/vim-go
 
+14. vim-polyglot	https://github.com/sheerun/vim-polyglot
+
 
 ============= shortcuts ================================
 
