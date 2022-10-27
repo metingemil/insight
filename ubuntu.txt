@@ -266,6 +266,7 @@ gnome-control-center - segmentation fault when running in dwm
 
 
 temp fix : reset last panel with  $ gsettings set org.gnome.ControlCenter last-panel ''
+				  $ gsettings set org.gnome.Settings last-panel '' (on ubuntu 22.10)
 
 --------------------------------------------------
 
