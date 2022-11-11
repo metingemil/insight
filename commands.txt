@@ -56,6 +56,9 @@ wget --no-check-certificate --auth-no-challenge --user=admin --password='admin' 
 
 wget 'https://admin:admin@localhost:8000/api/cte_members' -qO
 
+wget -qO - --server-response --no-check-certificate --auth-no-challenge  --header="Authorization: Bearer $TOKEN"  https://localhost:4443/api/v1/nvos/deviceconfig/a856d455-d53e-46c1-b37a-78512c83b81f/policy/8096ba97-a2eb-49fb-8506-994e453b1d58/stats/ports
+
+wget -qO - --server-response --no-check-certificate --auth-no-challenge  https://localhost:4443/health
 
 ---
 vi /usr/riak/etc/riak.conf
