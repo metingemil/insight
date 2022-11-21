@@ -257,6 +257,7 @@ software:
 	- starship		-> starship command prompt
 	- auto-cpufreq		-> preserve laptop battery https://github.com/AdnanHodzic/auto-cpufreq
 	- texlive-most -> latex packages
+	- mupdf, mupdf-tools, mupdf-gl -> packeges used by vim-live-latex-preview plugin
 --------------------------
 
 fonts:
