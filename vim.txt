@@ -120,6 +120,8 @@ set spell spelllang=en_us
 
 14. vim-polyglot	https://github.com/sheerun/vim-polyglot
 
+15. vim-live-latex-preview	https://github.com/goballooning/vim-live-latex-preview
+
 
 ============= shortcuts ================================
 

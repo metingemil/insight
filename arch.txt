@@ -256,6 +256,7 @@ software:
 	- ranger		-> terminal window manager
 	- starship		-> starship command prompt
 	- auto-cpufreq		-> preserve laptop battery https://github.com/AdnanHodzic/auto-cpufreq
+	- texlive-most -> latex packages
 --------------------------
 
 fonts:
