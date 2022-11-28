@@ -63,6 +63,10 @@ nnoremap <Leader>l :Lines <C-r><C-w><CR>
 
 set spell spelllang=en_us
 
+set listchars=eol:^,trail:◦,tab:»»,extends:→,precedes:←,space:·,nbsp:~
+"set list
+
+
 ========== installed plugins ===================
 
 1. pathogen		https://github.com/tpope/vim-pathogen
