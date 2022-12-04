@@ -88,3 +88,5 @@ git update-index --skip-worktree(--no-skip-worktree) [file]   -> skip(unskip) un
 
 git remote -v  -> view remote
 
+git apply --reject applied_patches/dwm-dynamicswallow-20210221-61bb8b2.diff -> applies the patch (the diff file) without failing the patch aplication if there are issues
+
