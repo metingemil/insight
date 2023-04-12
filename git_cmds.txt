@@ -40,7 +40,7 @@ git reset --hard origin/master -> reset local master branch to origin/master (! 
 
 git reset --merge HEAD~1 -> undo last merge commit
 
-git rebase -i HEAD~3 -> interactive rebase last 3 commits beafore HEAD
+git rebase -i HEAD~3 -> interactive rebase last 3 commits beafore HEAD; merge/squash last 3 commits into one
 
 git revert commit -> automatically creates a new commit with opposite changes
 
