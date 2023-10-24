@@ -6,7 +6,7 @@ ctrl + e : Go to the end of the line you are currently typing on
 
 alt + f  : move forward one word
 
-alt + b  : move backward one work
+alt + b  : move backward one word
 
 ctrl + f : move forward (or use the right arrow)
 

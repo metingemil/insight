@@ -1,6 +1,36 @@
+============ java profile ==========
+jcmd -l   /  jps
+
+jps -mlvV
+
+jcmd 15020 VM.system_properties
+
+jcmd 15020 VM.flags
+
+jcmd 15020 VM.native_memory (–XX:NativeMemoryTracking=summary   or  -XX:NativeMemoryTracking=detail -> causes a 5% -10% performance overhead)
+
+jcmd 15020 JFR.check
+
+jcmd 15020 Thread.print / jstack 15020
+
+
+top -H -p 15020
+ps -T -p 15020 | nl | less
+
+CG alg used
+jhsdb jmap --heap --pid 3354
+
+jstat -gcutil [pid] 1000 (sampling interval)
+
+======================================
 
 # call https rest method and print on stdout
 	$ wget --no-check-certificate --auth-no-challenge --user=admin --password='admin' -qO - https://localhost:8000/api/filters/76 | jq --color-output | batcat
+
+	$ wget -O- --header "Content-Type: application/json" --post-data='[valid json data]' http://localhost:8080/openrtb
+
+
+
 
 
 # find string in files -> page it by using colors
@@ -27,6 +57,14 @@
 
 	$ grep -r -l "[old_string]" testdata/independent_mp_with_behaviors_test/ | xargs sed -i 's/old_string/new_string/g'
 
+
+
+========== aws ============
+
+aws s3 ls --profile=cross-account-transactions-prod s3://adswizz-app-data/dry-run-entity-cacher/db-cacher-20170227-devops3259/pandora/snapshot/
+aws ec2 describe-instances --profile cross-account-transactions-prod
+
+aws ec2 describe-instances --profile=cross-account-transactions-prod | jq -Cr '.Reservations[].Instances[] | .InstanceId +" | "+ .PublicIpAddress +" | "+ .PublicDnsName +" | "+ .State.Name +" | "+ (.Tags//[] | map(select(.Key=="Name"))[].Value|tostring)' | nl | less
 
 ========== VScode =========
 

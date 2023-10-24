@@ -152,7 +152,8 @@ set listchars=eol:^,trail:◦,tab:»»,extends:→,precedes:←,space:·,nbsp:~
 * " - return to the line where the cursor was before the latest jump
 * `` - return to the cursor position before the latest jump (undo the jump)
 
-
+* #, *  - search backwards, fwds the word under cursor
+* ctrl-l - clear search highlighting
 * ctrl-w - jump to a different windows
 * ctrl-w, shift > ( ctrl-w8> ) - increase vertical split window to right (by size 8)
 * ctrl-w, shift < - increase vertical split window to left 
