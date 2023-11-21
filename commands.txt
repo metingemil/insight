@@ -7,6 +7,8 @@ jcmd 15020 VM.system_properties
 
 jcmd 15020 VM.flags
 
+jcmd 15020 VM.info
+
 jcmd 15020 VM.native_memory (–XX:NativeMemoryTracking=summary   or  -XX:NativeMemoryTracking=detail -> causes a 5% -10% performance overhead)
 
 jcmd 15020 JFR.check
@@ -125,3 +127,52 @@ connect via smbclient and get or put file
 
 
 ---------
+
+maven run test with debugger
+	mvn -Dtest=MySuperClassTest -Dmaven.surefire.debug test
+
+run test in subproject from root dir
+	mvn test -Dtest=OpenRtbResponseMapperTest -pl protocol-web
+	
+
+-------------------
+
+docker ps i--all -> list running containers
+
+docker images
+
+docker run -it --entrypoint /bin/bash -v /Users/metin.gemil/Work/repos:/ch -v /Users/metin.gemil/.m2:/root/.m2  -v ~/servers/deliveryengine/:/root/servers/deliveryengine -v ~/.aws/:/root/.aws  maven:3.8.6-amazoncorretto-17
+
+docker exec -it funny_lewin bash
+docker attach funny_lewin
+
+docker stop funny_lewin
+docker start funny_lewin -a
+
+docker container rename CONTAINER NEW_NAME
+
+-------------------
+
+check used interfaces
+
+ifconfig -a
+networksetup -listallhardwareports
+route get google.com
+
+----------------------
+
+brew list
+brew list --pinned
+
+brew info tomcat@8
+
+brew pin tomcat@8
+
+brew update && brew upgrade && brew autoremove && brew cleanup
+
+----------------------
+
+
+
+
+
