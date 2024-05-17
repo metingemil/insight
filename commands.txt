@@ -143,6 +143,8 @@ docker images
 
 docker run -it --entrypoint /bin/bash -v /Users/metin.gemil/Work/repos:/ch -v /Users/metin.gemil/.m2:/root/.m2  -v ~/servers/deliveryengine/:/root/servers/deliveryengine -v ~/.aws/:/root/.aws  maven:3.8.6-amazoncorretto-17
 
+docker run -it --entrypoint /bin/zsh --platform linux/amd64 -v ~/Work/docker_volumes/ubuntu_vol1/:/root/shared ubuntu_mine:latest
+
 docker exec -it funny_lewin bash
 docker attach funny_lewin
 
@@ -150,6 +152,11 @@ docker stop funny_lewin
 docker start funny_lewin -a
 
 docker container rename CONTAINER NEW_NAME
+
+docker system df -v
+
+-> save container as a image 
+docker commit 918d85536264 ubuntu_mine
 
 -------------------
 

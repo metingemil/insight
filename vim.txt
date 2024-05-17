@@ -154,7 +154,7 @@ set listchars=eol:^,trail:◦,tab:»»,extends:→,precedes:←,space:·,nbsp:~
 
 * #, *  - search backwards, fwds the word under cursor
 * ctrl-l - clear search highlighting
-* ctrl-w - jump to a different windows
+* ctrl-w - jump to a different window
 * ctrl-w, shift > ( ctrl-w8> ) - increase vertical split window to right (by size 8)
 * ctrl-w, shift < - increase vertical split window to left 
 * ctrl-w - - increase horizontal split window down 
