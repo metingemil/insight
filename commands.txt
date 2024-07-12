@@ -137,7 +137,7 @@ run test in subproject from root dir
 
 -------------------
 
-docker ps i--all -> list running containers
+docker ps --all -> list running containers
 
 docker images
 
