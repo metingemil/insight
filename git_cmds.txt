@@ -92,6 +92,8 @@ git apply --reject applied_patches/dwm-dynamicswallow-20210221-61bb8b2.diff -> a
 
 git diff ..local_java17_upd services/src/main/resources/application.yml -> diff file from branch with file on branch local_java17_upd
 
+git diff ..origin/feature/AWTX-516-uids [--name-only --name-status] -> diff between branch and current branch (changes in MR)  
+
 git branch -m <new_name> -> rename current branch name
 
 git rebase --onto <newparent> <oldparent> -> change current branch parent branch from oldparent to new parent 

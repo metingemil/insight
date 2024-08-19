@@ -129,92 +129,98 @@ set listchars=eol:^,trail:◦,tab:»»,extends:→,precedes:←,space:·,nbsp:~
 
 ============= shortcuts ================================
 
-* ZZ — save+exit Vim the cool way
-* ZQ - quit+exit
-* zz, zt, zb — move line of your cursor to middle, top, and bottom of your view, respectively
-* H, M, L - move cursor to top,middle,bottom of the screen(High,Middle,Low)
+ZZ — save+exit Vim the cool way
+ZQ - quit+exit
+zz, zt, zb — move line of your cursor to middle, top, and bottom of your view, respectively
+H, M, L - move cursor to top,middle,bottom of the screen(High,Middle,Low)
+10h/j/k/l - move left/down/up/right 10 lines
 
-* e - move forward to the end of a word
-* w - move forward to the begining of a word
-* 3w - move forward three words
-* W - move forward a word
-* b - move backward to the begining of a word
-* 3b - move backwards three words
-* 0 - go to start on line
-* $ - go to end on line
-* ) - jump fwd one sentence
-* ( - jump back one sentence
-* } - jump fwd one paragraph
-* { - jump back one paragraph 
-* G - jump to the end of the file
-* gg - jump to the start of the file
-* g; - jump to last edit 
-* " - return to the line where the cursor was before the latest jump
-* `` - return to the cursor position before the latest jump (undo the jump)
-* gx - follnw hovered link
+ctrl-u, ctrl-d — moves up/down half a page
+ctrl-b, ctrl-f - move back/forward one full page
+ctrl-y, ctrl-e - move screen up/down one line without moving the cursor
 
-* #, *  - search backwards, fwds the word under cursor
-* ctrl-l - clear search highlighting
-* ctrl-w - jump to a different window
-* ctrl-w, shift > ( ctrl-w8> ) - increase vertical split window to right (by size 8)
-* ctrl-w, shift < - increase vertical split window to left 
-* ctrl-w - - increase horizontal split window down 
-* ctrl-w + - increase horizontal split window up
-* ctrl-w arrow_up/down,left,right(j,k,h,l) -  navigate splits
-* ctrl-w v -> split window vertically
-* ctrl-w s -> split window horizontally 
-* ctrl-w q - quit split
+e - move forward to the end of a word
+w - move forward to the begining of a word
+3w - move forward three words
+W - move forward a word
+b - move backward to the begining of a word
+3b - move backwards three words
+0 - go to start on line
+$ - go to end on line
+) - jump fwd one sentence
+( - jump back one sentence
+} - jump fwd one paragraph
+{ - jump back one paragraph 
+G - jump to the end of the file
+5G - jump to line 5
+gg - jump to the start of the file
+g; - jump to last edit 
+" - return to the line where the cursor was before the latest jump
+`` - return to the cursor position before the latest jump (undo the jump)
+gx - follow hovered link
 
-* ctrl-u, ctrl-d — moves up/down half a page
-* ctrl-b, ctrl-f - move back/forward one full page
-* ctrl-y, ctrl-e - move screen up/down one line without moving the cursor
+#, *  - search backwards, fwds the word under cursor
+ctrl-l - clear search highlighting
+ctrl-w - jump to a different window
+ctrl-w, shift > ( ctrl-w8> ) - increase vertical split window to right (by size 8)
+ctrl-w, shift < - increase vertical split window to left 
+ctrl-w - - increase horizontal split window down 
+ctrl-w + - increase horizontal split window up
+ctrl-w arrow_up/down,left,right(j,k,h,l) -  navigate splits
+ctrl-w v -> split window vertically
+ctrl-w s -> split window horizontally 
+ctrl-w q - quit split
 
-* ciw — deletes the word you’re hovering and automatically puts you in INSERT mode (change inside word)
-* C — deletes from cursor to end of line and puts you in INSERT mode
+ciw — deletes the word you’re hovering and automatically puts you in INSERT mode (change inside word)
+C — deletes from cursor to end of line and puts you in INSERT mode
 
-* dt<char> — deletes from your cursor to the next instance of the character you specify (delete to <character>)
-* dw - delete from the cursor to start of next word
-* de - delete from cursor to end of current word
-* d$ - delete from the cursor to end of line
+dt<char> — deletes from your cursor to the next instance of the character you specify (delete to <character>)
+dw - delete from the cursor to start of next word
+de - delete from cursor to end of current word
+d$ - delete from the cursor to end of line
 
-* f<char> - move cursor to next <char> in line
-* i - insert before the cursor
-* I - insert at the begining of line
-* a - insert after the cursor
-* A - insert at the end of current line
-* o - append a new line below the current line and enter insert mode
-* O - append a new line above the current line and enter insert mode
-* J - join current line with the next line (removing the newline) (this adds a space between lines)
- gJ - join current line with the next line (removing the newline)
- 3J - joins 3 lines together
-* u - undo
-* U - undo whole line
-* ctrl-r - redo
+X - delete(backspace) in normal mode
 
-* ~ — toggles the case [upper/lower] on the character hovered or selected (tilde; key below Esc for standard keyboards)
-* . — repeat your last Vim command (period)
-* ggvG= — auto-indent the entire file (goto beginning, enter VISUAL mode, go/select to end of file, and indent lines [==] selected)
+:m-5/+5 - move current line 5 lines up/down
 
-* ctrl-x ctrl-f	- in insert mode -> insert file name in path
-* ctrl-p - in insert mode - code completion
+f<char> - move cursor to next <char> in line
+i - insert before the cursor
+I - insert at the begining of line
+a - insert after the cursor
+A - insert at the end of current line
+o - append a new line below the current line and enter insert mode
+O - append a new line above the current line and enter insert mode
+J - join current line with the next line (removing the newline) (this adds a space between lines)
+gJ - join current line with the next line (removing the newline)
+3J - joins 3 lines together
+u - undo
+U - undo whole line
+ctrl-r - redo
 
-* % - match parantheses
+~ — toggles the case [upper/lower] on the character hovered or selected (tilde; key below Esc for standard keyboards)
+. — repeat your last Vim command (period)
+ggvG= — auto-indent the entire file (goto beginning, enter VISUAL mode, go/select to end of file, and indent lines [==] selected)
 
-* ctrl-v - enter visual block mode
+ctrl-x ctrl-f	- in insert mode -> insert file name in path
+ctrl-p - in insert mode - code completion
+
+% - match parantheses
+
+ctrl-v - enter visual block mode
 	 - select untill the last line to modify
   I	 - (shift-i) enter block insert mode
 	 - make desirect changes (this happen on the first line)
   Esc	 - after escape is pressed the changes are applied to all selected lines
 
-* ctrl-t, ctrl-d - indent current linke forward/backward in insert mode
-* >, < - in linewise visual mode - indent selected text (repeat with .)
-* >>, << - in normal mode - indent current line and go to start of line
+ctrl-t, ctrl-d - indent current linke forward/backward in insert mode
+>, < - in linewise visual mode - indent selected text (repeat with .)
+>>, << - in normal mode - indent current line and go to start of line
 
-* ctrl-rx - in insert mode - inserts the contents of register x
+ctrl-rx - in insert mode - inserts the contents of register x
 
-* V= - reformat selected text
-* =  - correct alignment of code
-* == - reformat one line
+V= - reformat selected text
+=  - correct alignment of code
+== - reformat one line
 
 set spell  -> enable spell checking
 set nospell -> disable spell checking
