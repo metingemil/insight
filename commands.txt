@@ -180,6 +180,10 @@ brew update && brew upgrade && brew autoremove && brew cleanup
 ----------------------
 
 
+git diff mainline..origin/feature/AWTX-516-uids | delta --syntax-theme=Dracula --keep-plus-minus-markers --line-numbers --true-color=always
+
+git diff mainline..origin/feature/AWTX-516-uids | git-split-diffs --color | less -RFX
+
 
 
 

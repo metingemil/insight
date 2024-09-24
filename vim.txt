@@ -179,9 +179,28 @@ dw - delete from the cursor to start of next word
 de - delete from cursor to end of current word
 d$ - delete from the cursor to end of line
 
-X - delete(backspace) in normal mode
 
-:m-5/+5 - move current line 5 lines up/down
+:m-5/+5 -> move current line 5 lines up/down
+
+:reg    -> contents of registers
+ctrl-r * -> paste contents of clipboard when in insert mode
+ctrl-r " -> paste contents of unamed register when in insert mode
+
+bve -> select word under cursor  /ve - if cursor at the start of word / bvE - to jump to end of word in separators in word
+yiw -> yank current word
+y$  -> yank from cursor to end of the line
+y^  -> yank (copy) everything from the cursor to the start of the line.
+yw  -> yank (copy) to the start of the next word.
+yaw -> yank all word (includes a trailing space)
+yy  -> yank the current line
+3yy -> yank three lines starting at the current one
+yap -> yank all paragraph (includes trailing newline)
+
+
+x -> delete the character under the cursor
+X -> delete(backspace) in normal mode
+r -> replace the character under the cursor 
+
 
 f<char> - move cursor to next <char> in line
 i - insert before the cursor
@@ -193,6 +212,7 @@ O - append a new line above the current line and enter insert mode
 J - join current line with the next line (removing the newline) (this adds a space between lines)
 gJ - join current line with the next line (removing the newline)
 3J - joins 3 lines together
+
 u - undo
 U - undo whole line
 ctrl-r - redo
