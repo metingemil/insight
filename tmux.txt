@@ -104,6 +104,10 @@ ctrl + shift + v	-> paste from system clipboard
 
 :kill-session	-> kill current tmux session
 
+:movew -r -> renumber window indexes
+
+ctrl + b , -> rename window
+
 ==============================================================
 
 https://tmuxcheatsheet.com/

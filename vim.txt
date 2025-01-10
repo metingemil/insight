@@ -139,6 +139,8 @@ ctrl-u, ctrl-d — moves up/down half a page
 ctrl-b, ctrl-f - move back/forward one full page
 ctrl-y, ctrl-e - move screen up/down one line without moving the cursor
 
+ctrl-o	- in insert mode one-off normal mode action 
+
 e - move forward to the end of a word
 w - move forward to the begining of a word
 3w - move forward three words
@@ -153,6 +155,7 @@ $ - go to end on line
 { - jump back one paragraph 
 G - jump to the end of the file
 5G - jump to line 5
+Nh/j/k/l - jump N lines left/down/up/right
 gg - jump to the start of the file
 g; - jump to last edit 
 " - return to the line where the cursor was before the latest jump

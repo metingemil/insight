@@ -30,7 +30,7 @@ git merge [dest_branch] [source_branch] --allow-unrelated-histories -> merge sou
 git commit --amend -> change last commit
 
 git reset [named commit] -> set the current branch HEAD to named commit
-		- (--mixed (default optional) -> cpy from repo to staing area; --soft - dont't copy anything from repo; --hard - copy from repo to working area and staging area)
+		- (--mixed (default optional) -> cpy from repo to staing area; --hard - dont't copy anything from repo; --soft - copy from repo to working area and staging area)
 		- use case: remove commited file from last commit
 						i) git reset --soft HEAD~1  -> move HEAD to the last commit and don't touch anything in working and staging area (will leave the files modified locally as before the commit)
 						ii) git reset HEAD <file>	-> remove the file we don't want in the commit (also git rm --cached <file> is identical) - this removes it from the staging area
