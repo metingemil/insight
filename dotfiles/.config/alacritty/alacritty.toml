@@ -1,0 +1,26 @@
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+decorations = "Buttonless"
+dynamic_padding = false
+opacity = 0.75
+blur = true
+position = {x = 700, y = 1000}
+dimensions = {columns = 210, lines = 60}
+
+[font]
+#normal.family = "Meslo LG M for Powerline"
+#normal.family = "MesloLGS Nerd Font Mono"
+normal.family = "Mononoki Nerd Font Mono"
+size = 12
+builtin_box_drawing = true 
+
+[general]
+live_config_reload = true
+
+[window.padding]
+x = 10
+y = 10
+
