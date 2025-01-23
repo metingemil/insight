@@ -269,3 +269,15 @@ https://www.cs.oberlin.edu/~kuperman/help/vim/home.html
 https://vim.rtorr.com/lang/en_us/
 
 
+=========== neovim ===============
+
+attach buffer to lsp client: :lua vim.lsp.buf_attach_client(20,"2") 
+https://neovim.io/doc/user/lsp.html#vim.lsp.buf_attach_client()
+
+:LspInfo -> list running lsp clients to get it's client id
+
+
+search in oppened buffers :lua require('telescope.builtin').live_grep({ grep_open_files = true }) 
+
+
+==================================

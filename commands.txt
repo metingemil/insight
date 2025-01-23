@@ -135,6 +135,9 @@ run test in subproject from root dir
 	mvn test -Dtest=OpenRtbResponseMapperTest -pl protocol-web
 	
 
+mvn test -Dtest=RollingWindowForPodcastsTest#test1 -pl=core -Dadd-opens=java.base/java.lang=ALL-UNNAMED
+
+
 -------------------
 
 docker ps --all -> list running containers
