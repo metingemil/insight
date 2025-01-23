@@ -33,8 +33,15 @@ require("lazy").setup({
 
 --configure telescope
 local builtin = require('telescope.builtin')
+local function telescope_live_grep_open_files()
+	require('telescope.builtin').live_grep {
+		grep_open_files = true,
+	}
+end
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fga', builtin.live_grep, { desc = 'Telescope live grep' })
+-- it works when running command ' require('telescope.builtin').live_grep({ grep_open_files = true }) '
+vim.keymap.set('n', '<leader>fg', telescope_live_grep_open_files, { desc = 'Telescope live grep in opened buffers' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 -- end telescope
@@ -230,10 +237,102 @@ vim.cmd.colorscheme "tokyonight-night"
 --- end tokyonight
 
 
---- nvim-jdtls
-local config = {
-    cmd = {'/opt/homebrew/bin/jdtls'},
-    root_dir = vim.fs.dirname(vim.fs.find({'gradlew', '.git', 'mvnw'}, { upward = true })[1]),
+---nvim-lspconfig
+local lspconfig = require("lspconfig")
+--lspconfig.jdtls.setup{}
+lspconfig.lua_ls.setup{
+	settings = {
+		Lua = {
+			--runtime = {
+				-- Tell the language server which version of Lua you're using
+				-- (most likely LuaJIT in the case of Neovim)
+			--	version = 'LuaJIT',
+			--},
+			diagnostics = {
+				-- Get the language server to recognize the `vim` global
+				globals = {
+					'vim',
+					'require'
+				},
+			},
+			workspace = {
+				-- Make the server aware of Neovim runtime files
+				library = vim.api.nvim_get_runtime_file("", true),
+			},
+			-- Do not send telemetry data containing a randomized but unique identifier
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
 }
-require('jdtls').start_or_attach(config)
---- end nvim-jdtls
+--- end nvim-lspconfig
+
+-- Create the lsp keymaps only when a 
+-- language server is active
+vim.api.nvim_create_autocmd('LspAttach', {
+  desc = 'LSP actions',
+  callback = function(event)
+    local opts = {buffer = event.buf}
+
+    vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+    vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+    vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+    vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+    vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+    vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+    vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+    vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+    vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+    vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+  end,
+})
+
+
+----- nvim-cmp
+local cmp = require('cmp')
+cmp.setup{ 
+	sources = { 
+		{ name = 'nvim_lsp' }, 
+		{ name = 'buffer' }, 
+		{ name = 'vsnip'}, 
+	}, 
+}
+------ end nvim-cmp
+
+------ noice
+require("noice").setup({
+  lsp = {
+    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+    override = {
+      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+      ["vim.lsp.util.stylize_markdown"] = true,
+      ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+    },
+  },
+  -- you can enable a preset for easier configuration
+  presets = {
+    bottom_search = true, -- use a classic bottom cmdline for search
+    command_palette = true, -- position the cmdline and popupmenu together
+    long_message_to_split = true, -- long messages will be sent to a split
+    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+    lsp_doc_border = false, -- add a border to hover docs and signature help
+  },
+})
+---- end noice
+
+
+
+--- mason
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  -- Replace the language servers listed here 
+  -- with the ones you want to install
+  ensure_installed = {'lua_ls', 'rust_analyzer'},
+  handlers = {
+    function(server_name)
+      require('lspconfig')[server_name].setup({})
+    end,
+  },
+})
+--- end mason
