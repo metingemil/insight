@@ -1,3 +1,7 @@
+right_format = """
+$cmd_duration 
+$time"""
+
 # Inserts a blank line between shell prompts
 add_newline = true
 
@@ -12,3 +16,15 @@ disabled = true
 [directory]
 truncation_length = 5
 format = "[$path]($style)[$lock_symbol]($lock_style) "
+
+[time]
+disabled = false
+format = "[ $time]($style)"
+time_format = "%T"
+utc_time_offset = "local"
+style = "italic dimmed white"
+
+[cmd_duration]
+min_time = 50
+format = 'took [$duration]($style)'
+style = "italic dimmed white"
