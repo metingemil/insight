@@ -74,8 +74,8 @@ public class Main2
 
     public static long getPID()
     {
-        String processName = java.lang.management.ManagementFactory.getRuntimeMXBean().getName();
-        return Long.parseLong(processName.split("@")[0]);
+        //String processName = java.lang.management.ManagementFactory.getRuntimeMXBean().getName();
+        return 0L;//Long.parseLong(processName.split("@")[0]);
     }
 
     public static void log(String message)

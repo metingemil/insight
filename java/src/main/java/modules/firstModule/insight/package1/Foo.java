@@ -1,4 +1,5 @@
-package package1;
+package modules.firstModule.insight.package1;
+//package package1;  uncomment this and remove previous line
 
 import com.sun.net.httpserver.HttpServer;
 
