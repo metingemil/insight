@@ -24,6 +24,16 @@ jhsdb jmap --heap --pid 3354
 
 jstat -gcutil [pid] 1000 (sampling interval)
 
+ps e -ww -p 38580 -> all environment variables for process
+
+find com -type f -path "com/adswizz/deliveryengine/configuration/*" -print | less
+find com -maxdepth 3 -type f -path "com/adswizz/deliveryengine/*" -print | paste -sd " " -
+find ch-as-delivery-engine-16.35.3/com -maxdepth 3 -type f -print | sed 's|ch-as-delivery-engine-16.35.3/||'
+
+find ch-as-delivery-engine-16.35.3/com -maxdepth 3 -type f -path "ch-as-delivery-engine-16.35.3/com/adswizz/deliveryengine/*"  -print | sed 's|ch-as-delivery-engine-16.35.3/||' | paste -sd " " -
+
+jar uf ../as-delivery-engine-16.35.3-SNAPSHOT.jar $(find com -maxdepth 3 -type f -path "com/adswizz/deliveryengine/*"  -print | paste -sd " " -)
+
 ======================================
 
 # call https rest method and print on stdout
@@ -187,6 +197,14 @@ git diff mainline..origin/feature/AWTX-516-uids | delta --syntax-theme=Dracula -
 
 git diff mainline..origin/feature/AWTX-516-uids | git-split-diffs --color | less -RFX
 
+
+----------------------
+
+
+xattr -cr /Applications/LibreWolf.app
+
+
+----------------------
 
 
 
