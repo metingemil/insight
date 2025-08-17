@@ -245,6 +245,10 @@ V= - reformat selected text
 =  - correct alignment of code
 == - reformat one line
 
+ctrl-y -> accept lsp suggestions
+ctrl-e -> close lsp suggestions 
+
+
 set spell  -> enable spell checking
 set nospell -> disable spell checking
 set list -> enable show all characters(eol, tabs ..)

@@ -24,6 +24,11 @@ ctrl + u : Cut the part of the line before the cursor
 
 ctrl + y : Paste the last text that was cut or copied.
 
+ctrl + x , ctr + e <=> fc -> edit last command in default text editor
+
+^errTxt^correctTxt -> replaces errTxt with correctTxt in the previous command
+
+
   -> https://github.com/junegunn/fzf/blob/master/shell/completion.zsh
 
   alt + c : fzf change selected directory widget
