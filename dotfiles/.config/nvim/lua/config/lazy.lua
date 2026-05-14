@@ -28,14 +28,35 @@ require("lazy").setup({
   install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
   checker = { enabled = true },
+  -- no plugins require luarocks; disable to silence hererocks healthcheck warnings
+  rocks = { enabled = false },
 })
 
 
 --configure telescope
+require("telescope").setup({
+  defaults = {
+    -- Put the useful part first
+    path_display = { "filename_first" },
+
+    -- Make Telescope itself wider
+    layout_config = {
+      width = 0.95,
+      horizontal = {
+        preview_width = 0.55,
+      },
+    },
+
+    -- Optional: avoid long changing preview-window titles
+    dynamic_preview_title = false,
+  },
+})
 local builtin = require('telescope.builtin')
 local function telescope_live_grep_open_files()
-	require('telescope.builtin').live_grep {
+	builtin.live_grep {
 		grep_open_files = true,
+		prompt_title = 'Live Grep in Open Files',
+		default_text = vim.fn.expand('<cword>'),
 	}
 end
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
@@ -72,33 +93,10 @@ bufferline.setup({
 
 
 -- treesitter
-require'nvim-treesitter.configs'.setup({
-  -- A list of parser names, or "all" (the listed parsers MUST always be installed)
-  ensure_installed = { "bash", "javascript", "java", "typescript", "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
-
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
-
-  -- Automatically install missing parsers when entering buffer
-  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-  auto_install = true,
-
-  -- List of parsers to ignore installing (or "all")
-  ignore_install = { },
-
-  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
-  highlight = {
-    enable = true,
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-})
+require('nvim-treesitter').setup {
+  -- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
+  install_dir = vim.fn.stdpath('data') .. '/site'
+}
 --- end treesitter
 
 ----- lualine
@@ -238,9 +236,7 @@ vim.cmd.colorscheme "tokyonight-night"
 
 
 ---nvim-lspconfig
-local lspconfig = require("lspconfig")
---lspconfig.jdtls.setup{}
-lspconfig.lua_ls.setup{
+vim.lsp.config('lua_ls', {
 	settings = {
 		Lua = {
 			--runtime = {
@@ -249,7 +245,7 @@ lspconfig.lua_ls.setup{
 			--	version = 'LuaJIT',
 			--},
 			diagnostics = {
-				-- Get the language server to recognize the `vim` global
+				-- Get the language server to revim.lsp.enable('ts_ls')cognize the `vim` global
 				globals = {
 					'vim',
 					'require'
@@ -265,7 +261,11 @@ lspconfig.lua_ls.setup{
 			},
 		},
 	},
-}
+})
+vim.lsp.enable("lua_ls")
+
+--lspconfig.clangd.setup{}
+
 --- end nvim-lspconfig
 
 -- Create the lsp keymaps only when a 
@@ -281,6 +281,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
     vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
     vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+    vim.keymap.set('n', 'ghi', '<cmd>lua vim.lsp.buf.incoming_calls()<cr>', opts)
+    vim.keymap.set('n', 'gho', '<cmd>lua vim.lsp.buf.outgoing_calls()<cr>', opts)
+    vim.keymap.set('n', 'gt', '<cmd>lua vim.lsp.buf.typehierarchy()<cr>', opts)
     vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
     vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
     vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
